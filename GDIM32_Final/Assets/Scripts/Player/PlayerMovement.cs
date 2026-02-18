@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //Initiate event for when an item is picked up
+    //public delegate void ItemPickedUp(CollectableData itemData);
+    //public event ItemPickedUp OnItemPickedUp;
     [SerializeField] private NavMeshAgent _player;
 
     private float _speed;

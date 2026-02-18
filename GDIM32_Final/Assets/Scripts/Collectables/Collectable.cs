@@ -1,13 +1,14 @@
 using UnityEngine;
-using UnityEngine.UIElements;
+using System;
 
 public class Collectable : MonoBehaviour
 {
     [SerializeField] private CollectableData _itemData;
+    
     void PickUp()
     {
         Debug.Log("Picked up " + gameObject.name);
-        //Player.ItemPickedUp?.Invoke(_itemData);
+        //GameController.Instance.Player.OnItemPickedUp?.Invoke(_itemData);
     }
 
     void OnTriggerEnter(Collider other){
