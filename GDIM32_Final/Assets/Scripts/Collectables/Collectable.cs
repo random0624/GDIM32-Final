@@ -7,6 +7,7 @@ public class Collectable : MonoBehaviour
     void PickUp()
     {
         Debug.Log("Picked up " + gameObject.name);
+        //Player.ItemPickedUp?.Invoke(_itemData);
     }
 
     void OnTriggerEnter(Collider other){
