@@ -27,11 +27,11 @@ public class Lion : MonoBehaviour
         
     }
 
-    public void ChangeState()
+
+    private void EnterNewState(LionState state)
     {
 
     }
-
     public void Idle()
     {
         //have them chill for a set amt of time
@@ -46,4 +46,6 @@ public class Lion : MonoBehaviour
     {
         //set navmesh destination to player
     }
+
+ 
 }
