@@ -13,6 +13,12 @@ public class Lion : MonoBehaviour
     private LionState _state;
     void Start()
     {
+        ChangeState(LionState._idle);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         switch (_state)
         {
             case LionState._idle: Idle(); break;
@@ -21,30 +27,47 @@ public class Lion : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     private void EnterNewState(LionState state)
     {
+        switch (state)
+        {
+            case LionState._idle:
+                //slkjflskdj
+                break;
 
+            case LionState._wandering:
+                //sdajkfaj
+                break;
+
+            case LionState._pursuing:
+                //akjhfdsfjh
+                break;
+        }
     }
+
+    private void ChangeState(LionState newState)
+    {
+        _state= newState;
+        EnterNewState(_state);
+    }
+
     public void Idle()
     {
         //have them chill for a set amt of time
+        ChangeState(LionState._idle);
     }
 
     public void Wandering()
     {
         //find random destination and set navmesh destination to it
+        ChangeState(LionState._wandering);
     }
 
     public void Pursuing()
     {
         //set navmesh destination to player
+        ChangeState(LionState._pursuing);
     }
 
  
