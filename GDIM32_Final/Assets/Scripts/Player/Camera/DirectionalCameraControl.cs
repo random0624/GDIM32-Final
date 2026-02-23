@@ -7,7 +7,7 @@ public class DirectionalCameraControl : MonoBehaviour
 {
     [SerializeField] private float sensX;
     [SerializeField] private float sensY;
-
+        
     [SerializeField] private Transform orientation;
 
     private float xRotation;
