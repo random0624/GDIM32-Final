@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,9 +10,14 @@ public class PlayerMovement : MonoBehaviour
     //Initiate event for when an item is picked up
     //public delegate void ItemPickedUp(CollectableData itemData);
     //public event ItemPickedUp OnItemPickedUp;
-    [SerializeField] private NavMeshAgent _player;
 
-    private float _speed;
+    //[SerializeField] private NavMeshAgent _player;
+    [SerializeField] private Rigidbody  rb;
+
+    [SerializeField] private float _speed;
+
+    [SerializeField] private Transform orientation;
+    [SerializeField] private Vector3 lookDirection;
 
     void Start()
     {
@@ -26,9 +32,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
+        
         float vertical = Input.GetAxis("Vertical");
         float horiztonal = Input.GetAxis("Horizontal");
 
-        transform.Translate(((vertical * Vector3.forward) + (horiztonal * Vector3.right)) * _speed * Time.deltaTime);
+        lookDirection = orientation.forward + orientation.right;
+        transform.Translate(((vertical * orientation.forward) + (horiztonal * orientation.right)) * _speed * Time.deltaTime);
+
+        /*
+        if (Input.GetKey(KeyCode.W))
+        { 
+            transform.Translate(Vector3.forward * _speed * Time.deltaTime);
+        }
+        if(Input.GetKey(KeyCode.S))
+        {
+
+        }
+        if(Input.GetKey(KeyCode.A))
+        {
+
+        }
+        if(Input.GetKey(KeyCode.D))
+        {
+
+        }
+
+        */
     }
 }

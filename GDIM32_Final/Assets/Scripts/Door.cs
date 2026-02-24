@@ -17,23 +17,31 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        CheckIfOpen(this);
     }
 
-    /*
+    
     private void OnMouseDown()
     {
-        GameObject obj = currentItem;
-        if (obj.tag == "key")
+        //GameObject obj = currentItem;
+        //if (obj.tag == "key")
         {
             //Check if the color of this key is the same as door
-            Key key = null; // obj.GetComponent<doorLogic>();
-            if (key.color == color)
+            //Key key = null; // obj.GetComponent<doorLogic>();
+            //if (key.color == color)
             {
                 canOpen = true;
             }
 
         }
     }
-    */
+
+    private void CheckIfOpen(Door store)
+    {
+        if (canOpen == true)
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
+    
 }
