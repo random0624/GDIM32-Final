@@ -1,19 +1,35 @@
 using UnityEngine;
-using System;
 
 public class Collectable : MonoBehaviour
 {
     [SerializeField] private CollectableData _itemData;
-    
-    void PickUp()
+
+    public void PickUp()
     {
-        Debug.Log("Picked up " + gameObject.name);
-        //GameController.Instance.Player.OnItemPickedUp?.Invoke(_itemData);
+        if (_itemData == null) return;
+        Inventory inventory = FindObjectOfType<Inventory>();
+        if (inventory != null)
+            inventory.AddItem(_itemData);
+        Destroy(gameObject);
     }
 
-    void OnTriggerEnter(Collider other){
-        if(other.CompareTag("Player")){
-            PickUp();
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerMovement player = other.GetComponent<PlayerMovement>();
+            if (player != null)
+                player.SetNearbyCollectable(this);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerMovement player = other.GetComponent<PlayerMovement>();
+            if (player != null)
+                player.SetNearbyCollectable(null);
         }
     }
 }
