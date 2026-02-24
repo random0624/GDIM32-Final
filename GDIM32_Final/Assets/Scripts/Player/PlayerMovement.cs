@@ -7,9 +7,12 @@ using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //Initiate event for when an item is picked up
-    //public delegate void ItemPickedUp(CollectableData itemData);
-    //public event ItemPickedUp OnItemPickedUp;
+    private Collectable _nearbyCollectable;
+
+    public void SetNearbyCollectable(Collectable collectable)
+    {
+        _nearbyCollectable = collectable;
+    }
 
     //[SerializeField] private NavMeshAgent _player;
     [SerializeField] private Rigidbody  rb;
@@ -27,6 +30,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E) && _nearbyCollectable != null)
+        {
+            _nearbyCollectable.PickUp();
+            _nearbyCollectable = null;
+        }
         HandleMovement();
     }
 
