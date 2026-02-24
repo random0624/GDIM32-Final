@@ -4,7 +4,6 @@ public class Collectable : MonoBehaviour
 {
     [SerializeField] private CollectableData _itemData;
 
-    //PickUp is called when the player picks up the collectable
     public void PickUp()
     {
         if (_itemData == null) return;
@@ -14,7 +13,6 @@ public class Collectable : MonoBehaviour
         Destroy(gameObject);
     }
 
-    //OnTriggerEnter is called when the player's collider touches the collectable's collider
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -25,7 +23,6 @@ public class Collectable : MonoBehaviour
         }
     }
 
-    //OnTriggerExit is called when the player's collider stops touching the collectable's collider
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))

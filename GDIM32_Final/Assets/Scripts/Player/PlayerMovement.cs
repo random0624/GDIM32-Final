@@ -30,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Pickup item if it is nearby
         if (Input.GetKeyDown(KeyCode.E) && _nearbyCollectable != null)
         {
             _nearbyCollectable.PickUp();
