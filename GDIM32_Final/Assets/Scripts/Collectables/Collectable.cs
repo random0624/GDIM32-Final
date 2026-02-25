@@ -4,7 +4,7 @@ public class Collectable : MonoBehaviour
 {
     [SerializeField] private CollectableData _itemData;
 
-    public void PickUp()
+    /*public void PickUp()
     {
         if (_itemData == null) return;
         Inventory inventory = FindObjectOfType<Inventory>();
@@ -30,6 +30,5 @@ public class Collectable : MonoBehaviour
             PlayerMovement player = other.GetComponent<PlayerMovement>();
             if (player != null)
                 player.SetNearbyCollectable(null);
-        }
-    }
+        }*/
 }
