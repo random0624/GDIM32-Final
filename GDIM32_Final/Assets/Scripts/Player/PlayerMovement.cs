@@ -30,12 +30,19 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.E) && _nearbyCollectable != null)
-        {
-            _nearbyCollectable.PickUp();
-            _nearbyCollectable = null;
-        }*/
         HandleMovement();
+    }
+
+    public void TryPickUpNearby()
+    {
+        if (_nearbyCollectable == null) return;
+
+        Inventory inv = GetComponent<Inventory>();
+        if (inv == null) return;
+
+        inv.AddItem(_nearbyCollectable.ItemData);
+        Destroy(_nearbyCollectable.gameObject);
+        _nearbyCollectable = null;
     }
 
     private void HandleMovement()

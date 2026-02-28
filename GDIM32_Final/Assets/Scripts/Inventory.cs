@@ -19,8 +19,6 @@ public class Inventory : MonoBehaviour
     [SerializeField] GameObject meatItem;
 
     private Dictionary<itemType, GameObject> itemSetActive = new Dictionary<itemType, GameObject>(){};
-
-
     void Start()
     {
         itemSetActive.Add(itemType.Key, keyItem);
@@ -30,6 +28,10 @@ public class Inventory : MonoBehaviour
     }
     void Update()
     {
+        if(Input.GetKeyDown(useItemKey))
+        {
+            PickUpItem();
+        }
         if(Input.GetKeyDown(KeyCode.Alpha1) && inventoryList.Count > 0)
         {
             selectedItemIndex = 0;
@@ -54,13 +56,33 @@ public class Inventory : MonoBehaviour
         {
             selectedItemIndex = 4;
             NewItemSelected();
-        }   
+        }
+
+    }
+
+    private void PickUpItem()
+    {
+        if (GameController.Instance == null) return;
+        if (GameController.Instance.Player == null) return;
+
+        GameController.Instance.Player.TryPickUpNearby();
+    }
+
+    public void AddItem(CollectableData data)
+    {
+        if (data == null) return;
+        if (inventoryList == null)
+        {
+            inventoryList = new List<itemType>();
+        }
+
+        inventoryList.Add(data.itemType);
     }
 
     private void NewItemSelected()
     {
-        keyItem.SetActive(false);
-        meatItem.SetActive(false);
+        /*keyItem.SetActive(false);
+        meatItem.SetActive(false);*/
 
         GameObject selectedItem = itemSetActive[inventoryList[selectedItemIndex]];
         selectedItem.SetActive(true);
