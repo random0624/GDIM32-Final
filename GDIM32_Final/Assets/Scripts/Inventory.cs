@@ -8,6 +8,8 @@ public class Inventory : MonoBehaviour
     public List<itemType> inventoryList;
     public int selectedItemIndex;
 
+    public int _meatCount;
+
     [Space(20)]
     [Header("Keys")]
     [SerializeField] KeyCode throwItemKey;
@@ -86,5 +88,25 @@ public class Inventory : MonoBehaviour
 
         GameObject selectedItem = itemSetActive[inventoryList[selectedItemIndex]];
         selectedItem.SetActive(true);
+    }
+
+    public int CountItem(itemType type)
+    {
+        int count=0;
+        if (inventoryList == null) return 0;
+        else {
+
+            
+            for (int i = 0; i < inventoryList.Count; i++)
+            {
+                if (inventoryList[i] == type)
+                {
+                    count++;
+                }
+            }
+            return count;
+          }
+
+
     }
 }

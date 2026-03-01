@@ -13,6 +13,7 @@ public class Lion : MonoBehaviour
     [SerializeField] private float _wanderDistance;
     [SerializeField] private float _triggerDistance;
     [SerializeField] private Animator _animator;
+    
     private float _stateTimer;
     private Transform _playerTransform;
     private bool _triggered;
@@ -152,5 +153,7 @@ public class Lion : MonoBehaviour
             ChangeState(LionState._wandering);
         }
     }
+
+
 
 }
