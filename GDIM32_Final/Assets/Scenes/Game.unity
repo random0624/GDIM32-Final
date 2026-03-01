@@ -627,6 +627,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 182904392}
   _speed: 5
+  _meat: {fileID: 1637490983}
+  _meatCount: 0
+  _meatThrowForce: 4
   orientation: {fileID: 1234036307}
   lookDirection: {x: 0, y: 0, z: 0}
 --- !u!136 &182904391
@@ -783,6 +786,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryList: 0000000001000000
   selectedItemIndex: 0
+  _meatCount: 0
   throwItemKey: 103
   useItemKey: 101
   keyItem: {fileID: 2108164431}
@@ -6393,7 +6397,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -8436,7 +8440,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
