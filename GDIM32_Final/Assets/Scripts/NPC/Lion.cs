@@ -12,6 +12,7 @@ public class Lion : MonoBehaviour
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private float _wanderDistance;
     [SerializeField] private float _triggerDistance;
+    [SerializeField] private Animator _animator;
     private float _stateTimer;
     private Transform _playerTransform;
     private bool _triggered;
@@ -53,6 +54,9 @@ public class Lion : MonoBehaviour
             case LionState._idle:
                 _stateTimer = 0.0f;
                 _agent.isStopped = true;
+                _animator.SetBool("Moving", false);
+                _animator.SetTrigger("Calm");
+                
                 break;
 
             case LionState._wandering:
@@ -69,11 +73,17 @@ public class Lion : MonoBehaviour
                 {
                     _agent.SetDestination(hit.position);
                 }
+                _animator.SetBool("Moving", true);
+                _animator.SetTrigger("Calm");
+                
                 break;
 
             case LionState._pursuing:
                 _agent.isStopped = false;
                 _agent.speed = 6.0f;
+                _animator.SetBool("Moving", true);
+                _animator.SetTrigger("Triggered");
+                _animator.Play("roar");
                 break;
         }
     }
@@ -88,8 +98,9 @@ public class Lion : MonoBehaviour
     {
         //have them chill for a set amt of time
         _stateTimer += Time.deltaTime;
-        
-        if(_stateTimer>= _idleDuration)
+        _animator.Play("idle");
+
+        if (_stateTimer>= _idleDuration)
         {
             ChangeState(LionState._wandering);
         }
@@ -97,8 +108,9 @@ public class Lion : MonoBehaviour
 
     public void Wandering()
     {
+        _animator.Play("walk");
 
-        if(!_agent.pathPending&& _agent.hasPath &&_agent.remainingDistance<= _agent.stoppingDistance)
+        if (!_agent.pathPending&& _agent.hasPath &&_agent.remainingDistance<= _agent.stoppingDistance)
         {
             ChangeState(LionState._idle);
         }
@@ -107,6 +119,7 @@ public class Lion : MonoBehaviour
 
     public void Pursuing()
     {
+        _animator.Play("run");
         _agent.SetDestination(_playerTransform.position);
  
         
