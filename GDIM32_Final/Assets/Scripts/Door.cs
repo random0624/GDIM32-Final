@@ -23,16 +23,11 @@ public class Door : MonoBehaviour
     
     private void OnMouseDown()
     {
-        //GameObject obj = currentItem;
-        //if (obj.tag == "key")
+        Inventory playerInventory = GetComponent<Inventory>();
+        int currentIntSlot = playerInventory.selectedItemIndex;
+        if (playerInventory.inventoryList[currentIntSlot] == itemType.Key) 
         {
-            //Check if the color of this key is the same as door
-            //Key key = null; // obj.GetComponent<doorLogic>();
-            //if (key.color == color)
-            {
-                canOpen = true;
-            }
-
+            canOpen = true;
         }
     }
 
@@ -40,7 +35,7 @@ public class Door : MonoBehaviour
     {
         if (canOpen == true)
         {
-            this.gameObject.SetActive(false);
+            store.gameObject.SetActive(false);
         }
     }
     

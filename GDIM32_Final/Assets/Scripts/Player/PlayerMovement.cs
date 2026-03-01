@@ -73,25 +73,6 @@ public class PlayerMovement : MonoBehaviour
         lookDirection = orientation.forward + orientation.right;
         transform.Translate(((vertical * orientation.forward) + (horiztonal * orientation.right)) * _speed * Time.deltaTime);
 
-        /*
-        if (Input.GetKey(KeyCode.W))
-        { 
-            transform.Translate(Vector3.forward * _speed * Time.deltaTime);
-        }
-        if(Input.GetKey(KeyCode.S))
-        {
-
-        }
-        if(Input.GetKey(KeyCode.A))
-        {
-
-        }
-        if(Input.GetKey(KeyCode.D))
-        {
-
-        }
-
-        */
     }
 
     private void MeatThrow()
