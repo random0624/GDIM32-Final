@@ -80,7 +80,7 @@ public class Lion : MonoBehaviour
 
             case LionState._pursuing:
                 _agent.isStopped = false;
-                _agent.speed = 6.0f;
+                _agent.speed = 5.0f;
                 _animator.SetBool("Moving", true);
                 _animator.SetTrigger("Triggered");
                 _animator.Play("roar");
