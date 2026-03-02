@@ -12,9 +12,10 @@ public class Pigeon : MonoBehaviour
     [SerializeField] private Button optionButton;
     [SerializeField] private Button ExitButton;
 
-    [SerializeField] private ScriptableObject hint;
+    [SerializeField] private DialogueData hint;
 
     private bool isOpeoned = false;
+    private bool nextText = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,10 @@ public class Pigeon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Box();
+        Debug.Log(hintText.text);
+        Debug.Log(nextText);
+        updateText();
+        checkBox();
     }
 
     private void OnMouseDown()
@@ -33,19 +37,18 @@ public class Pigeon : MonoBehaviour
         if (!isOpeoned)
         {
             isOpeoned = true;
+            Cursor.lockState = CursorLockMode.None;
         }
 
     }
 
-    private void Box()
+    private void checkBox()
     {
         if (isOpeoned)
         {
             dialougeBox.SetActive(true);
-            //hintText.text = hint.ToString();
-            hintText.text = "This is a test";
         }
-        else
+        if(!isOpeoned)
         {
             dialougeBox.SetActive(false);
         }
@@ -53,7 +56,27 @@ public class Pigeon : MonoBehaviour
 
     public void closeBox()
     {
-        isOpeoned = false;
-       
+       isOpeoned = false;
+       optionButton.gameObject.SetActive(true);
+       nextText = false;
+       Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void nextStage()
+    {
+        optionButton.gameObject.SetActive(false);
+        nextText = true;
+    }
+
+    public void updateText()
+    {
+        if(!nextText)
+        {
+            hintText.text = hint.startingText;
+        }
+        if(nextText)
+        {
+            hintText.text = hint.finalText;
+        }
     }
 }
