@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour
     public int selectedItemIndex;
 
     public int _meatCount;
+    [SerializeField] GameObject meatPrefab;
 
     [Space(20)]
     [Header("Keys")]
@@ -20,16 +21,36 @@ public class Inventory : MonoBehaviour
     [SerializeField] GameObject keyItem;
     [SerializeField] GameObject meatItem;
 
+    [Space(20)]
+    [Header("Raycast Pickup")]
+    [SerializeField] Camera playerCamera;
+    [SerializeField] float pickupReach = 5f;
+
     private Dictionary<itemType, GameObject> itemSetActive = new Dictionary<itemType, GameObject>(){};
+    private Dictionary<itemType, GameObject> itemPrefab = new Dictionary<itemType, GameObject>(){};
     void Start()
     {
         itemSetActive.Add(itemType.Key, keyItem);
         itemSetActive.Add(itemType.Meat, meatItem);
 
+        itemPrefab.Add(itemType.Meat, meatPrefab);
+        if(inventoryList == null){
+            inventoryList = new List<itemType>();
+        }
+        inventoryList.Clear();
         NewItemSelected();
     }
     void Update()
     {
+        if(Input.GetKeyDown(throwItemKey) && inventoryList.Count > 0){
+            Instantiate(itemPrefab[inventoryList[selectedItemIndex]], position: meatPrefab.transform.position, new Quaternion());
+            inventoryList.RemoveAt(selectedItemIndex);
+            if(selectedItemIndex != 0){
+                selectedItemIndex--;
+            }
+            NewItemSelected();
+        }
+
         if(Input.GetKeyDown(useItemKey))
         {
             PickUpItem();
@@ -64,10 +85,19 @@ public class Inventory : MonoBehaviour
 
     private void PickUpItem()
     {
-        if (GameController.Instance == null) return;
-        if (GameController.Instance.Player == null) return;
+        if (playerCamera == null) return;
 
-        GameController.Instance.Player.TryPickUpNearby();
+        Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f));
+        RaycastHit hitInfo;
+
+        if (!Physics.Raycast(ray, out hitInfo, pickupReach))
+            return;
+
+        Collectable collectable = hitInfo.collider.GetComponent<Collectable>();
+        if (collectable == null) return;
+
+        AddItem(collectable.ItemData);
+        Destroy(collectable.gameObject);
     }
 
     public void AddItem(CollectableData data)
@@ -79,12 +109,16 @@ public class Inventory : MonoBehaviour
         }
 
         inventoryList.Add(data.itemType);
+        NewItemSelected();
     }
 
     private void NewItemSelected()
     {
-        /*keyItem.SetActive(false);
-        meatItem.SetActive(false);*/
+        keyItem.SetActive(false);
+        meatItem.SetActive(false);
+
+        if (inventoryList == null || inventoryList.Count == 0)
+            return;
 
         GameObject selectedItem = itemSetActive[inventoryList[selectedItemIndex]];
         selectedItem.SetActive(true);
