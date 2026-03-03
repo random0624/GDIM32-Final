@@ -21,6 +21,10 @@ I handled everything about the lion, and I made the player meat throw mechanic. 
 
 
 The meat throw mechanic is basically where you press space and the player throws a meat object from their inventory. I had to add a method called CountItem() to the inventory class in order to be able to check if there are any meat objects to throw in the players inventory. The MeatThrow() method in the player class handles the physics of throwing the meat object, and update() changes a member variable that stores the number of meat in the inventory to match. update() checks if the space ey was pressed, and if the meatcount isnt 0, ThrowMeat() gets called. 
+
+I also designed and made the arena.
+
+The outline we made in week 7 is really useful when it comes to making tasks for the trello board, which we use often to remind ourselves what needs to be done and visually shows us how much more we have left, which helps us figure out the minimum we need to get done every week. We haven't made any changes to our final plan. Considering our first attempt at our GDD for this game was quite vague, meaning we really focused on getting the mechanics and systems as specific as possible for the final plan, right now it's serving as a good guideline while we work. 
 ### Team Member Name 3
 Put your individual check-in Devlog here.
 
