@@ -13,6 +13,13 @@ public class Lion : MonoBehaviour
     [SerializeField] private float _wanderDistance;
     [SerializeField] private float _triggerDistance;
     [SerializeField] private Animator _animator;
+
+    [SerializeField] private Transform _eyepoint;
+    [SerializeField] private float _viewDistance;
+    [SerializeField] private float _viewAngle;
+    [SerializeField] private LayerMask _obstacleMask;
+    [SerializeField] private LayerMask _playerMask;
+
     
     private float _stateTimer;
     private Transform _playerTransform;
@@ -154,6 +161,36 @@ public class Lion : MonoBehaviour
         }
     }
 
+    private bool CanSeePlayer()
+    {
+        if(_playerTransform == null || _eyepoint == null)
+        {
+            return false;
+        }
 
+        Vector3 toPlayer = _playerTransform.position- _eyepoint.position;
+
+        if (toPlayer.sqrMagnitude> _viewDistance*_viewDistance)
+        {
+            return false;
+        }
+
+        float angle = Vector3.Angle(_eyepoint.forward, toPlayer);
+
+        if(angle > _viewAngle * 0.5f)
+        {
+            return false;
+        }
+
+        float distance = toPlayer.magnitude;
+
+        if(Physics.Raycast(_eyepoint.position, toPlayer, distance, _obstacleMask))
+        {
+            return false;
+        }
+
+        //first line im deleting if ts doesnt work
+        return Physics.Raycast(_eyepoint.position, toPlayer.normalized, distance, _playerMask);
+    }
 
 }
