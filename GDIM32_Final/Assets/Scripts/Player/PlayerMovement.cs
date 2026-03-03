@@ -15,9 +15,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //[SerializeField] private NavMeshAgent _player;
-    [SerializeField] private Rigidbody  rb;
+    [SerializeField] private Rigidbody rb;
     [SerializeField] private float _speed;
-
 
     [SerializeField] private GameObject _meat;
     [SerializeField] private int _meatCount;

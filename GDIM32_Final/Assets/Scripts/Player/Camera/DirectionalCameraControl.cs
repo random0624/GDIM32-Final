@@ -9,6 +9,7 @@ public class DirectionalCameraControl : MonoBehaviour
     [SerializeField] private float sensY;
         
     [SerializeField] private Transform orientation;
+    [SerializeField] private Transform rig;
 
     private float xRotation;
     private float yRotation;
@@ -34,5 +35,6 @@ public class DirectionalCameraControl : MonoBehaviour
         //rotate cam and orientation
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        rig.rotation = Quaternion.Euler(-90, yRotation, 0);
     }
 }
