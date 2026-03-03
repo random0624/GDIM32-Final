@@ -27,7 +27,7 @@ public class Pigeon : MonoBehaviour
     void Update()
     {
         updateText();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             nextStage();
         }
