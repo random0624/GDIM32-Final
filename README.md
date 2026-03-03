@@ -43,8 +43,13 @@ Put your individual final Devlog here.
 ## Open-Source Assets
 Cite any open-source assets here. Put them in a LIST, and use correctly formatted LINKS.
 [Monkey Model Asset](https://omabuarts.itch.io/quirky-series-free-animals)
+
 [Door Asset](https://www.fab.com/listings/41516fcd-3362-4a4f-8f98-c72c74c60dfa)
+
 [Jungle Music](https://www.youtube.com/watch?v=QJWxzGdrhpY)
+
 [Lion Asset- Model and animations](https://sketchfab.com/3d-models/animated-lion-3d-animal-model-1c3cd9595ae34eee92f957d67facc08d)
+
 [Fence Asset](https://assetstore.unity.com/packages/3d/chainlink-fences-73107)
+
 [Nature Asset Pack- used for terrain and its elements](https://assetstore.unity.com/packages/3d/environments/ultimate-nature-lite-176906)
