@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PigeonText
   m_EditorClassIdentifier: 
   startingText: Hay want to hear a hint?
-  finalText: Check under one of the trees for the key :]
+  finalText: Check near that tree stump over there :].                                         
+    Use the key to open the door!
