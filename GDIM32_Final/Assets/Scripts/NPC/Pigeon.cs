@@ -27,6 +27,14 @@ public class Pigeon : MonoBehaviour
     void Update()
     {
         updateText();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            nextStage();
+        }
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            closeBox();
+        }
         checkBox();
     }
 
@@ -35,7 +43,6 @@ public class Pigeon : MonoBehaviour
         if (!isOpeoned)
         {
             isOpeoned = true;
-            Cursor.lockState = CursorLockMode.None;
         }
 
     }
@@ -57,7 +64,6 @@ public class Pigeon : MonoBehaviour
        isOpeoned = false;
        optionButton.gameObject.SetActive(true);
        nextText = false;
-       Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void nextStage()
@@ -77,4 +83,5 @@ public class Pigeon : MonoBehaviour
             hintText.text = hint.finalText;
         }
     }
+
 }
