@@ -9689,8 +9689,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _idleDuration: 3
   _agent: {fileID: 1819754086}
-  _wanderDistance: 4
-  _triggerDistance: 3
+  _wanderDistance: 10
+  _triggerDistance: 6
   _animator: {fileID: 1819754088}
   _eyepoint: {fileID: 192518348}
   _viewDistance: 10

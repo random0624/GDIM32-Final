@@ -52,6 +52,22 @@ public class Lion : MonoBehaviour
         }
 
         CheckDistance();
+
+        if(_playerTransform != null && _eyepoint != null)
+        {
+            Vector3 direction = (_playerTransform.position - _eyepoint.position).normalized;
+            Debug.DrawRay(_eyepoint.position, direction, CanSeePlayer()? Color.blue:Color.red); 
+        }
+
+        //debugging
+
+        /*
+
+        if (CanSeePlayer())
+        {
+            Debug.Log("can see");
+        }
+        */
     }
 
 
@@ -148,7 +164,7 @@ public class Lion : MonoBehaviour
 
         }
 
-        if (inRange && !_triggered)
+        if (inRange && !_triggered &&CanSeePlayer())
         {
             _triggered = true;
             _lionTriggered?.Invoke();
