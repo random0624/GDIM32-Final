@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Inventory : MonoBehaviour
 {
@@ -25,6 +27,7 @@ public class Inventory : MonoBehaviour
     [Header("Raycast Pickup")]
     [SerializeField] Camera playerCamera;
     [SerializeField] float pickupReach = 5f;
+    [SerializeField] GameObject pickUpItem_gameObject;
 
     private Dictionary<itemType, GameObject> itemSetActive = new Dictionary<itemType, GameObject>(){};
     private Dictionary<itemType, GameObject> itemPrefab = new Dictionary<itemType, GameObject>(){};
@@ -39,6 +42,7 @@ public class Inventory : MonoBehaviour
         }
         inventoryList.Clear();
         NewItemSelected();
+        pickUpItem_gameObject.SetActive(false);
     }
     void Update()
     {
@@ -93,14 +97,22 @@ public class Inventory : MonoBehaviour
         Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f));
         RaycastHit hitInfo;
 
-        if (!Physics.Raycast(ray, out hitInfo, pickupReach))
-            return;
-
-        Collectable collectable = hitInfo.collider.GetComponent<Collectable>();
-        if (collectable == null) return;
-
-        AddItem(collectable.ItemData);
-        Destroy(collectable.gameObject);
+        if (Physics.Raycast(ray, out hitInfo, pickupReach)){
+            Collectable collectable = hitInfo.collider.GetComponent<Collectable>();
+            if(collectable!=null){
+                pickUpItem_gameObject.SetActive(true);
+                if(Input.GetKeyDown(useItemKey)){
+                    AddItem(collectable.ItemData);
+                    Destroy(collectable.gameObject);
+                }
+            }
+            else{
+                    pickUpItem_gameObject.SetActive(false);
+                }
+        }
+        else{
+                    pickUpItem_gameObject.SetActive(false);
+                }
     }
 
     public void AddItem(CollectableData data)
