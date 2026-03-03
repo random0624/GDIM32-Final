@@ -18,6 +18,8 @@ I believe that the Proposal breakdown was useful for establishing a strong found
 ### Evrin (Hajin) Lee
 
 I handled everything about the lion, and I made the player meat throw mechanic. The lion has three states, idle, wandering, and pursuing. I used an FSM to handle this. the lion starts in an idle state, where it plays the idle animation and it stays stationary for a set amount of seconds. in the wandering state, I set its navmesh destination to a random point on the arena and it walks there and goes back to idle. this repeats until its interrupted by the player entering its line of sight at a close enough distance. this is checked by checkdistance() and canseeplayer(). checkdistance is the method that calls EnterNewState() (which switches the lions state to the lionstate enum passed as a parameter) if both canseeplayer() returns true, and the player is close enough. The lion will remain in the pursuing state until either of those conditions become false. 
+
+
 The meat throw mechanic is basically where you press space and the player throws a meat object from their inventory. I had to add a method called CountItem() to the inventory class in order to be able to check if there are any meat objects to throw in the players inventory. The MeatThrow() method in the player class handles the physics of throwing the meat object, and update() changes a member variable that stores the number of meat in the inventory to match. update() checks if the space ey was pressed, and if the meatcount isnt 0, ThrowMeat() gets called. 
 ### Team Member Name 3
 Put your individual check-in Devlog here.
