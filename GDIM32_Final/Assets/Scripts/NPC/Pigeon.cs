@@ -26,8 +26,6 @@ public class Pigeon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(hintText.text);
-        Debug.Log(nextText);
         updateText();
         checkBox();
     }

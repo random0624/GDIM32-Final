@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
 
     //[SerializeField] private NavMeshAgent _player;
     [SerializeField] private Rigidbody  rb;
-
     [SerializeField] private float _speed;
 
 
@@ -26,11 +25,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _meatThrowForce;
     private Vector3 _meatSpawnPoint;
 
-    
     [SerializeField] private Transform orientation;
     [SerializeField] private Vector3 lookDirection;
-    
-    void Start()
+
+    [SerializeField] private Animator playerAnim;
+
+    public enum PlayerState
+    {
+        _idle, _walking
+    }
+
+    private PlayerState _state;
+
+
+void Start()
     {
         _inventory = GetComponent<Inventory>();
     }
@@ -39,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         HandleMovement();
+        UpdateAnim();
         
         if(_inventory != null)
         {
@@ -73,6 +82,15 @@ public class PlayerMovement : MonoBehaviour
         lookDirection = orientation.forward + orientation.right;
         transform.Translate(((vertical * orientation.forward) + (horiztonal * orientation.right)) * _speed * Time.deltaTime);
 
+        if(vertical != 0 ||  horiztonal != 0)
+        {
+            ChangeState(PlayerState._walking);
+        }
+        else
+        {
+            ChangeState(PlayerState._idle);
+        }
+ 
     }
 
     private void MeatThrow()
@@ -89,5 +107,23 @@ public class PlayerMovement : MonoBehaviour
         }
 
      
+    }
+
+    private void UpdateAnim()
+    {
+        switch(_state)
+        {
+            case PlayerState._idle:
+                playerAnim.SetBool("isWalking", false);
+                break;
+            case PlayerState._walking:
+                playerAnim.SetBool("isWalking", true);
+                break; 
+        }
+    }
+
+    private void ChangeState(PlayerState newState)
+    {
+        _state = newState;
     }
 }
