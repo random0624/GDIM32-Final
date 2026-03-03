@@ -12,8 +12,10 @@ We had one huge version control crisis where one of us was working on something 
 
 
 
-### Team Member Name 2
-Put your individual check-in Devlog here.
+### Evrin (Hajin) Lee
+
+I handled everything about the lion, and I made the player meat throw mechanic. The lion has three states, idle, wandering, and pursuing. I used an FSM to handle this. the lion starts in an idle state, where it plays the idle animation and it stays stationary for a set amount of seconds. in the wandering state, I set its navmesh destination to a random point on the arena and it walks there and goes back to idle. this repeats until its interrupted by the player entering its line of sight at a close enough distance. this is checked by checkdistance() and canseeplayer(). checkdistance is the method that calls EnterNewState() (which switches the lions state to the lionstate enum passed as a parameter) if both canseeplayer() returns true, and the player is close enough. The lion will remain in the pursuing state until either of those conditions become false. 
+The meat throw mechanic is basically where you press space and the player throws a meat object from their inventory. I had to add a method called CountItem() to the inventory class in order to be able to check if there are any meat objects to throw in the players inventory. The MeatThrow() method in the player class handles the physics of throwing the meat object, and update() changes a member variable that stores the number of meat in the inventory to match. update() checks if the space ey was pressed, and if the meatcount isnt 0, ThrowMeat() gets called. 
 ### Team Member Name 3
 Put your individual check-in Devlog here.
 
@@ -34,3 +36,6 @@ Cite any open-source assets here. Put them in a LIST, and use correctly formatte
 [Monkey Model Asset](https://omabuarts.itch.io/quirky-series-free-animals)
 [Door Asset](https://www.fab.com/listings/41516fcd-3362-4a4f-8f98-c72c74c60dfa)
 [Jungle Music](https://www.youtube.com/watch?v=QJWxzGdrhpY)
+[Lion Asset- Model and animations](https://sketchfab.com/3d-models/animated-lion-3d-animal-model-1c3cd9595ae34eee92f957d67facc08d)
+[Fence Asset](https://assetstore.unity.com/packages/3d/chainlink-fences-73107)
+[Nature Asset Pack- used for terrain and its elements](https://assetstore.unity.com/packages/3d/environments/ultimate-nature-lite-176906)
