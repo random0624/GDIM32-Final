@@ -8109,7 +8109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4437478498462176553, guid: f0942079fcab217478df8d99cba04474, type: 3}
       propertyPath: m_text
-      value: Space
+      value: V
       objectReference: {fileID: 0}
     - target: {fileID: 4694911133510491693, guid: f0942079fcab217478df8d99cba04474, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
