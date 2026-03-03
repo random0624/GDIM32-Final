@@ -3239,7 +3239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 581312071}
-  _speed: 5
+  _speed: 6
   _meat: {fileID: 9119513212501301151, guid: e3165a5143c74614698ee0ee58621a09, type: 3}
   _meatCount: 0
   _meatThrowForce: 4
