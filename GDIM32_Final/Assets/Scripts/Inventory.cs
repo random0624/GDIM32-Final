@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using JetBrains.Annotations;
 
 public class Inventory : MonoBehaviour
 {
@@ -27,8 +28,17 @@ public class Inventory : MonoBehaviour
     [Header("Raycast Pickup")]
     [SerializeField] Camera playerCamera;
     [SerializeField] float pickupReach = 5f;
+
+    [Space(20)]
+    [Header("UI")]
+    [SerializeField] Image[] inventorySlotImage = new Image[2];
+    [SerializeField] Image[] inventoryBackgroundImage = new Image[2];
+    [SerializeField] Sprite emptySlotSprite;
+    [SerializeField] Sprite keySprite;
+    [SerializeField] Sprite meatSprite;
     [SerializeField] GameObject pickUpItem_gameObject;
 
+    private Dictionary<itemType, Sprite> _itemSpriteByType;
     private Dictionary<itemType, GameObject> itemSetActive = new Dictionary<itemType, GameObject>(){};
     private Dictionary<itemType, GameObject> itemPrefab = new Dictionary<itemType, GameObject>(){};
     void Start()
@@ -41,6 +51,9 @@ public class Inventory : MonoBehaviour
             inventoryList = new List<itemType>();
         }
         inventoryList.Clear();
+        _itemSpriteByType = new Dictionary<itemType, Sprite>();
+        if (keySprite != null) _itemSpriteByType[itemType.Key] = keySprite;
+        if (meatSprite != null) _itemSpriteByType[itemType.Meat] = meatSprite;
         NewItemSelected();
         pickUpItem_gameObject.SetActive(false);
     }
@@ -61,6 +74,14 @@ public class Inventory : MonoBehaviour
         if(Input.GetKeyDown(useItemKey))
         {
             PickUpItem();
+        }
+        // UI
+        for (int i = 0; i < inventorySlotImage.Length; i++){
+            if (inventorySlotImage == null || i >= inventorySlotImage.Length) continue;
+            if (i < inventoryList.Count && _itemSpriteByType != null && _itemSpriteByType.TryGetValue(inventoryList[i], out Sprite sprite) && sprite != null)
+                inventorySlotImage[i].sprite = sprite;
+            else
+                inventorySlotImage[i].sprite = emptySlotSprite;
         }
         if(Input.GetKeyDown(KeyCode.Alpha1) && inventoryList.Count > 0)
         {
