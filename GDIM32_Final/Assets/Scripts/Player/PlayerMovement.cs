@@ -57,6 +57,7 @@ void Start()
         if (Input.GetKeyDown(KeyCode.Space) && _meatCount != 0)
         {
             MeatThrow();
+            _inventory.RemoveItem(itemType.Meat);
         }
     }
 

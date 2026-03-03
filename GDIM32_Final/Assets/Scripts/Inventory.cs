@@ -42,6 +42,8 @@ public class Inventory : MonoBehaviour
     }
     void Update()
     {
+
+        /*
         if(Input.GetKeyDown(throwItemKey) && inventoryList.Count > 0){
             Instantiate(itemPrefab[inventoryList[selectedItemIndex]], position: meatPrefab.transform.position, new Quaternion());
             inventoryList.RemoveAt(selectedItemIndex);
@@ -50,6 +52,7 @@ public class Inventory : MonoBehaviour
             }
             NewItemSelected();
         }
+        */
 
         if(Input.GetKeyDown(useItemKey))
         {
@@ -142,5 +145,27 @@ public class Inventory : MonoBehaviour
           }
 
 
+    }
+
+    public void RemoveItem(itemType type)
+    {
+        if (inventoryList == null) return;
+        else
+        {
+            for (int i = 0; i < inventoryList.Count; i++)
+            {
+                if (inventoryList[i] == type)
+                {
+                    inventoryList.RemoveAt(i);
+                    if (selectedItemIndex >= inventoryList.Count)
+                        selectedItemIndex = Mathf.Max(0, inventoryList.Count - 1);
+
+                    NewItemSelected(); 
+                    
+                    return;
+                }
+            }
+            return;
+        }
     }
 }
