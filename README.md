@@ -42,6 +42,7 @@ Put your individual final Devlog here.
 
 ## Open-Source Assets
 Cite any open-source assets here. Put them in a LIST, and use correctly formatted LINKS.
+
 [Monkey Model Asset](https://omabuarts.itch.io/quirky-series-free-animals)
 
 [Door Asset](https://www.fab.com/listings/41516fcd-3362-4a4f-8f98-c72c74c60dfa)
