@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Door : MonoBehaviour
@@ -7,6 +8,7 @@ public class Door : MonoBehaviour
     [SerializeField] private bool canOpen;
 
     [SerializeField] private Inventory playerInvetory;
+    [SerializeField] private TMP_Text doorText;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +47,11 @@ public class Door : MonoBehaviour
         if (canOpen == true)
         {
             store.gameObject.SetActive(false);
+            doorText.gameObject.SetActive(true);
+        }
+        else
+        {
+            doorText.gameObject.SetActive(false);
         }
     }
     
