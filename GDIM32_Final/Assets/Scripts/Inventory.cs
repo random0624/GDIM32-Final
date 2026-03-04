@@ -16,7 +16,7 @@ public class Inventory : MonoBehaviour
 
     [Space(20)]
     [Header("Keys")]
-    [SerializeField] KeyCode throwItemKey;
+    //[SerializeField] KeyCode throwItemKey;
     [SerializeField] KeyCode useItemKey;
 
     [Space(20)]
@@ -31,8 +31,8 @@ public class Inventory : MonoBehaviour
 
     [Space(20)]
     [Header("UI")]
-    [SerializeField] Image[] inventorySlotImage = new Image[2];
-    [SerializeField] Image[] inventoryBackgroundImage = new Image[2];
+    [SerializeField] Image[] inventorySlotImage = new Image[5];
+    [SerializeField] Image[] inventoryBackgroundImage = new Image[5];
     [SerializeField] Sprite emptySlotSprite;
     [SerializeField] Sprite keySprite;
     [SerializeField] Sprite meatSprite;
@@ -50,6 +50,9 @@ public class Inventory : MonoBehaviour
         if(inventoryList == null){
             inventoryList = new List<itemType>();
         }
+        for(int i = 0; i < inventorySlotImage.Length; i++){
+            inventorySlotImage[i].sprite = emptySlotSprite;
+        }
         inventoryList.Clear();
         _itemSpriteByType = new Dictionary<itemType, Sprite>();
         if (keySprite != null) _itemSpriteByType[itemType.Key] = keySprite;
@@ -59,7 +62,7 @@ public class Inventory : MonoBehaviour
     }
     void Update()
     {
-
+        UpdatedPickupPrompt();
         /*
         if(Input.GetKeyDown(throwItemKey) && inventoryList.Count > 0){
             Instantiate(itemPrefab[inventoryList[selectedItemIndex]], position: meatPrefab.transform.position, new Quaternion());
@@ -134,6 +137,29 @@ public class Inventory : MonoBehaviour
         else{
                     pickUpItem_gameObject.SetActive(false);
                 }
+    }
+
+    private void UpdatedPickupPrompt(){
+        if(pickUpItem_gameObject == null || playerCamera == null){
+            if(pickUpItem_gameObject != null) pickUpItem_gameObject.SetActive(false);
+            return;
+        }
+
+        Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f));
+        RaycastHit hitInfo;
+
+        if(Physics.Raycast(ray, out hitInfo, pickupReach)){
+            Collectable collectable = hitInfo.collider.GetComponent<Collectable>();
+            if(collectable != null){
+                pickUpItem_gameObject.SetActive(true);
+            }
+            else{
+                pickUpItem_gameObject.SetActive(false);
+            }
+        }
+        else{
+            pickUpItem_gameObject.SetActive(false);
+        }
     }
 
     public void AddItem(CollectableData data)
