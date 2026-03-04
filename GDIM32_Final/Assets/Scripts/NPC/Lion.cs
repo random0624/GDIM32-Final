@@ -25,6 +25,8 @@ public class Lion : MonoBehaviour
     private Transform _playerTransform;
     private bool _triggered;
 
+    private bool _playerInRange;
+
     public delegate void LionTriggered();
     public event LionTriggered _lionTriggered;
     public enum LionState
@@ -95,8 +97,10 @@ public class Lion : MonoBehaviour
 
                 if (NavMesh.SamplePosition(wanderDestination, out hit, _wanderDistance, NavMesh.AllAreas))
                 {
+                    Debug.Log("found new destination");
                     _agent.SetDestination(hit.position);
                 }
+                //add code here that doesn't let it move out of wandering unless destination met OR navmesh is given a new destination
                 _animator.SetBool("Moving", true);
                 _animator.SetTrigger("Calm");
                 
@@ -151,29 +155,32 @@ public class Lion : MonoBehaviour
 
     private void CheckDistance()
     {
-        bool inRange;
+        
 
         if (Vector3.Distance(transform.position, _playerTransform.position) <= _triggerDistance)
         {
-            inRange = true;
+            _playerInRange = true;
         }
         else
         {
 
-            inRange = false;
+            _playerInRange = false;
 
         }
 
-        if (inRange && !_triggered &&CanSeePlayer())
+        if (_playerInRange && !_triggered &&CanSeePlayer())
         {
             _triggered = true;
             _lionTriggered?.Invoke();
             ChangeState(LionState._pursuing);
         }
-        if (!inRange)
+        if (!_playerInRange)
         {
             _triggered = false;
-            ChangeState(LionState._wandering);
+            //need to move it back to a state when not in range
+            //comment this next line out
+           ChangeState(LionState._wandering);
+           //maybe try moving the entering wandering state somewhere else
         }
     }
 
