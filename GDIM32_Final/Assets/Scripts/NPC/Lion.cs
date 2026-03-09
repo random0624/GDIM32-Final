@@ -27,8 +27,13 @@ public class Lion : MonoBehaviour
 
     private bool _playerInRange;
 
+    private bool _lionNeedsNewDestination; //more like can have new destination
+    private Vector3 _currentLionWanderingPosition;
+
     public delegate void LionTriggered();
     public event LionTriggered _lionTriggered;
+
+   
     public enum LionState
     {
         _idle, _wandering, _pursuing
@@ -41,6 +46,7 @@ public class Lion : MonoBehaviour
         ChangeState(LionState._idle);
         _playerTransform =  GameController.Instance.Player.transform;
         _triggered = false;
+        _lionNeedsNewDestination = true;
     }
 
     // Update is called once per frame
@@ -78,6 +84,7 @@ public class Lion : MonoBehaviour
         switch (state)
         {
             case LionState._idle:
+                _lionNeedsNewDestination = true;
                 _stateTimer = 0.0f;
                 _agent.isStopped = true;
                 _animator.SetBool("Moving", false);
@@ -86,6 +93,7 @@ public class Lion : MonoBehaviour
                 break;
 
             case LionState._wandering:
+                _lionNeedsNewDestination = false;
                 _agent.isStopped = false;
                 _agent.speed = 3.5f;
                 Vector3 randomDirection = Random.insideUnitSphere * _wanderDistance;
@@ -99,6 +107,7 @@ public class Lion : MonoBehaviour
                 {
                     Debug.Log("found new destination");
                     _agent.SetDestination(hit.position);
+                    _currentLionWanderingPosition = hit.position;
                 }
                 //add code here that doesn't let it move out of wandering unless destination met OR navmesh is given a new destination
                 _animator.SetBool("Moving", true);
@@ -107,6 +116,7 @@ public class Lion : MonoBehaviour
                 break;
 
             case LionState._pursuing:
+                _lionNeedsNewDestination = true;
                 _agent.isStopped = false;
                 _agent.speed = 6.0f;
                 _animator.SetBool("Moving", true);
@@ -136,6 +146,7 @@ public class Lion : MonoBehaviour
 
     public void Wandering()
     {
+        
         _animator.Play("walk");
 
         if (!_agent.pathPending&& _agent.hasPath &&_agent.remainingDistance<= _agent.stoppingDistance)
@@ -174,12 +185,17 @@ public class Lion : MonoBehaviour
             _lionTriggered?.Invoke();
             ChangeState(LionState._pursuing);
         }
-        if (!_playerInRange)
+      
+        if (!_playerInRange &&!CanSeePlayer())
         {
             _triggered = false;
             //need to move it back to a state when not in range
             //comment this next line out
-           ChangeState(LionState._wandering);
+           CheckNewDestinationNeeded();
+            if (_lionNeedsNewDestination)
+            {
+                ChangeState(LionState._wandering);
+            }
            //maybe try moving the entering wandering state somewhere else
         }
     }
@@ -216,4 +232,15 @@ public class Lion : MonoBehaviour
         return Physics.Raycast(_eyepoint.position, toPlayer.normalized, distance, _playerMask);
     }
 
+    private void CheckNewDestinationNeeded()
+    {
+        float distance;
+        distance = Vector3.Distance(_currentLionWanderingPosition, transform.position);
+        if (distance <= 1)
+        {
+            _lionNeedsNewDestination = true;
+            Debug.Log("reached destination");
+        }
+
+    }
 }
