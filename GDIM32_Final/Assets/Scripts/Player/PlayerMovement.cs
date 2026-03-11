@@ -29,6 +29,13 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Animator playerAnim;
 
+    public delegate void LoseLife();
+    public event LoseLife OnLoseLife;
+
+    [SerializeField] public int _lifeCount;
+
+    [SerializeField] private Transform _spawnPoint;
+
     public enum PlayerState
     {
         _idle, _walking
@@ -125,5 +132,16 @@ void Start()
     private void ChangeState(PlayerState newState)
     {
         _state = newState;
+    }
+
+
+    private void OnCollisionEnter(Collision other)
+    {
+       if (other.gameObject.CompareTag("Lion"))
+        {
+            Debug.Log("minus one life");
+            OnLoseLife?.Invoke();
+            transform.position = _spawnPoint.position;
+        }
     }
 }

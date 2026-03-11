@@ -33,7 +33,7 @@ public class Lion : MonoBehaviour
     public delegate void LionTriggered();
     public event LionTriggered _lionTriggered;
 
-   
+
     public enum LionState
     {
         _idle, _wandering, _pursuing
@@ -45,6 +45,7 @@ public class Lion : MonoBehaviour
     {
         ChangeState(LionState._idle);
         _playerTransform =  GameController.Instance.Player.transform;
+        
         _triggered = false;
         _lionNeedsNewDestination = true;
     }
@@ -243,4 +244,6 @@ public class Lion : MonoBehaviour
         }
 
     }
+
+  
 }
