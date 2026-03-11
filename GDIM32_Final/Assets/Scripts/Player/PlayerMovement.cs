@@ -32,6 +32,9 @@ public class PlayerMovement : MonoBehaviour
     public delegate void LoseLife();
     public event LoseLife OnLoseLife;
 
+    public delegate void MeatThrownEvent();
+    public event MeatThrownEvent OnMeatThrownEvent;
+
     [SerializeField] public int _lifeCount;
 
     [SerializeField] private Transform _spawnPoint;
@@ -113,7 +116,7 @@ void Start()
             rb.AddForce(throwDirection.normalized * _meatThrowForce, ForceMode.Impulse);
         }
 
-     
+        OnMeatThrownEvent?.Invoke();
     }
 
     private void UpdateAnim()

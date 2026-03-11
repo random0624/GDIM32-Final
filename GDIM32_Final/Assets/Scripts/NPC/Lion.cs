@@ -34,6 +34,8 @@ public class Lion : MonoBehaviour
     public event LionTriggered _lionTriggered;
 
 
+    
+
     public enum LionState
     {
         _idle, _wandering, _pursuing
@@ -244,6 +246,22 @@ public class Lion : MonoBehaviour
         }
 
     }
+
+
+    private void ReactToMeatThrow()
+    {
+        //if close enough
+        //change navmesh dest to meat
+        //change state to pursuing
+        //might have to change the state machine a little so it can be set to any objects destination 
+    }
+
+
+    private void CheckMeatDistance()
+    {
+        //use triggerdistance
+    }
+
 
   
 }

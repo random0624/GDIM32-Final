@@ -92,8 +92,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3394956790909324380}
-  - component: {fileID: 8621102139001908672}
   - component: {fileID: 3241652217103706238}
+  - component: {fileID: 4532266771450861447}
   m_Layer: 0
   m_Name: Rock Cliff 3
   m_TagString: Untagged
@@ -120,37 +120,6 @@ Transform:
   - {fileID: 1274740656803847128}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!205 &8621102139001908672
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2763398485800194716}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.28445435, y: 3.9961047, z: -0.40104294}
-  m_Size: 10.945417
-  m_FadeMode: 1
-  m_AnimateCrossFading: 1
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.21622257
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 3688011680574022066}
-  - screenRelativeHeight: 0.14096747
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 1878359328549688531}
-  - screenRelativeHeight: 0.07267348
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 5875847185366797895}
-  - screenRelativeHeight: 0.023135839
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 826111016758403450}
-  m_Enabled: 1
 --- !u!64 &3241652217103706238
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -173,6 +142,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -151963107936707744, guid: 2fdcdf62eef546646a69ae9ead49b843, type: 3}
+--- !u!208 &4532266771450861447
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2763398485800194716}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4911015825305824555
 GameObject:
   m_ObjectHideFlags: 0
