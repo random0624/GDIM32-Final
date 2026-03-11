@@ -141,8 +141,9 @@ void Start()
         {
             Debug.Log("minus one life");
             _lifeCount--;
-            OnLoseLife?.Invoke();
             transform.position = _spawnPoint.position;
+            OnLoseLife?.Invoke();
+           
         }
     }
 }

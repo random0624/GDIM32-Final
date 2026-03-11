@@ -5,6 +5,7 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
     public PlayerMovement Player {get; private set;}
 
+    [SerializeField] GameObject _gameOverUI;
  
     private void Awake()
     {
@@ -40,6 +41,11 @@ public class GameController : MonoBehaviour
         if (Player._lifeCount <= 0)
         {
             Debug.Log("Game Over");
+            _gameOverUI.SetActive(true);
+            Time.timeScale = 0.0f;
         }
+
+        
+       
     }
 }
