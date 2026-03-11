@@ -14,13 +14,15 @@ public class Pigeon : MonoBehaviour
 
     [SerializeField] private DialogueData hint;
 
+    private int currentIndex = 0;
+
     private bool isOpeoned = false;
     private bool nextText = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameController.Instance.Player.birdClickedOn += OpenBox;
     }
 
     // Update is called once per frame
@@ -38,7 +40,7 @@ public class Pigeon : MonoBehaviour
         checkBox();
     }
 
-    private void OnMouseDown()
+    private void OpenBox()
     {
         if (!isOpeoned)
         {
@@ -76,12 +78,17 @@ public class Pigeon : MonoBehaviour
     {
         if(!nextText)
         {
-            hintText.text = hint.startingText;
+            hintText.text = hint.startingText[currentIndex];
         }
         if(nextText)
         {
-            hintText.text = hint.finalText;
+            hintText.text = hint.finalText[currentIndex];
         }
+    }
+
+    public void currentText()
+    {
+        currentIndex++;
     }
 
 }

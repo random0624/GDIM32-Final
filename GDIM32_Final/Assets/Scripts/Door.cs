@@ -10,10 +10,14 @@ public class Door : MonoBehaviour
     [SerializeField] private Inventory playerInvetory;
     [SerializeField] private TMP_Text doorText;
 
+    public delegate void ListenToEvent();
+    public event ListenToEvent wrongKey;
+    public event ListenToEvent correctKey;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameController.Instance.Player.doorClickedOn += doorLogic;
     }
 
     // Update is called once per frame
@@ -23,22 +27,22 @@ public class Door : MonoBehaviour
     }
 
     
-    private void OnMouseDown()
+    private void doorLogic()
     {
-
         int index = playerInvetory.selectedItemIndex;
         itemType currentItem = playerInvetory.inventoryList[index];
 
         if (currentItem == itemType.Key)
         {
             canOpen = true;
+            correctKey?.Invoke();
         } else if (index == 0)
         {
             Debug.Log("You dont have an item");
         }
         else
         {
-            Debug.Log("Not The right item");
+           wrongKey?.Invoke();
         }
     }
 

@@ -39,6 +39,17 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform _spawnPoint;
 
+
+    [SerializeField] private Camera mainCamera;
+
+    public delegate void GameListen();
+    public event GameListen doorClickedOn;
+    public event GameListen birdClickedOn;
+    private void Awake()
+    {
+        mainCamera = Camera.main;
+    }
+
     public enum PlayerState
     {
         _idle, _walking
@@ -69,6 +80,8 @@ void Start()
             MeatThrow();
             _inventory.RemoveItem(itemType.Meat);
         }
+
+        ClickedSystem();
     }
 
     public void TryPickUpNearby()
@@ -147,6 +160,27 @@ void Start()
             transform.position = _spawnPoint.position;
             OnLoseLife?.Invoke();
            
+        }
+    }
+
+    private void ClickedSystem()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform.gameObject.name == "Door")
+                {
+                    doorClickedOn?.Invoke();
+                }
+                if (hit.transform.gameObject.name == "Pigeon")
+                {
+                    birdClickedOn?.Invoke();
+                }
+            }
         }
     }
 }
