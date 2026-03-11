@@ -23,4 +23,23 @@ public class GameController : MonoBehaviour
         }
         Player = playerObj.GetComponent<PlayerMovement>();
     }
+
+    void OnEnable()
+    {
+        PlayerMovement player = FindObjectOfType<PlayerMovement>();
+        player.OnLoseLife += CheckGameOver;
+    }
+
+    void OnDisable()
+    {
+        PlayerMovement player = FindObjectOfType<PlayerMovement>();
+        player.OnLoseLife -= CheckGameOver;
+    }
+    private void CheckGameOver()
+    {
+        if (Player._lifeCount <= 0)
+        {
+            Debug.Log("Game Over");
+        }
+    }
 }

@@ -140,6 +140,7 @@ void Start()
        if (other.gameObject.CompareTag("Lion"))
         {
             Debug.Log("minus one life");
+            _lifeCount--;
             OnLoseLife?.Invoke();
             transform.position = _spawnPoint.position;
         }
