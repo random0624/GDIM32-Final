@@ -41,6 +41,20 @@ public class Inventory : MonoBehaviour
     private Dictionary<itemType, Sprite> _itemSpriteByType;
     private Dictionary<itemType, GameObject> itemSetActive = new Dictionary<itemType, GameObject>(){};
     private Dictionary<itemType, GameObject> itemPrefab = new Dictionary<itemType, GameObject>(){};
+
+    //Added get method for the current item display
+    public GameObject CurrentItemDisplay
+    {
+        get
+        {
+            if (inventoryList == null || inventoryList.Count == 0)
+                return null;
+            if (selectedItemIndex < 0 || selectedItemIndex >= inventoryList.Count)
+                return null;
+            return itemSetActive.TryGetValue(inventoryList[selectedItemIndex], out GameObject display) ? display : null;
+        }
+    }
+
     void Start()
     {
         itemSetActive.Add(itemType.Key, keyItem);
