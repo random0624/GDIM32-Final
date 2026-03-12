@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 public class Inventory : MonoBehaviour
 {
     [Header("General")]
-    public List<itemType> inventoryList;
+    public List<CollectableData> inventoryList;
     public int selectedItemIndex;
 
     public int _meatCount;
@@ -42,8 +42,8 @@ public class Inventory : MonoBehaviour
     private Dictionary<itemType, GameObject> itemSetActive = new Dictionary<itemType, GameObject>(){};
     private Dictionary<itemType, GameObject> itemPrefab = new Dictionary<itemType, GameObject>(){};
 
-    //Added get method for the current item display
-    public GameObject CurrentItemDisplay
+    // Current selected item's data for keyId to see if it's the correct key.
+    public CollectableData CurrentItem
     {
         get
         {
@@ -51,7 +51,7 @@ public class Inventory : MonoBehaviour
                 return null;
             if (selectedItemIndex < 0 || selectedItemIndex >= inventoryList.Count)
                 return null;
-            return itemSetActive.TryGetValue(inventoryList[selectedItemIndex], out GameObject display) ? display : null;
+            return inventoryList[selectedItemIndex];
         }
     }
 
@@ -62,7 +62,7 @@ public class Inventory : MonoBehaviour
 
         itemPrefab.Add(itemType.Meat, meatPrefab);
         if(inventoryList == null){
-            inventoryList = new List<itemType>();
+            inventoryList = new List<CollectableData>();
         }
         for(int i = 0; i < inventorySlotImage.Length; i++){
             inventorySlotImage[i].sprite = emptySlotSprite;
@@ -95,7 +95,7 @@ public class Inventory : MonoBehaviour
         // UI
         for (int i = 0; i < inventorySlotImage.Length; i++){
             if (inventorySlotImage == null || i >= inventorySlotImage.Length) continue;
-            if (i < inventoryList.Count && _itemSpriteByType != null && _itemSpriteByType.TryGetValue(inventoryList[i], out Sprite sprite) && sprite != null)
+            if (i < inventoryList.Count && _itemSpriteByType != null && _itemSpriteByType.TryGetValue(inventoryList[i].itemType, out Sprite sprite) && sprite != null)
                 inventorySlotImage[i].sprite = sprite;
             else
                 inventorySlotImage[i].sprite = emptySlotSprite;
@@ -181,10 +181,10 @@ public class Inventory : MonoBehaviour
         if (data == null) return;
         if (inventoryList == null)
         {
-            inventoryList = new List<itemType>();
+            inventoryList = new List<CollectableData>();
         }
 
-        inventoryList.Add(data.itemType);
+        inventoryList.Add(data);
         NewItemSelected();
     }
 
@@ -196,7 +196,7 @@ public class Inventory : MonoBehaviour
         if (inventoryList == null || inventoryList.Count == 0)
             return;
 
-        GameObject selectedItem = itemSetActive[inventoryList[selectedItemIndex]];
+        GameObject selectedItem = itemSetActive[inventoryList[selectedItemIndex].itemType];
         selectedItem.SetActive(true);
     }
 
@@ -209,7 +209,7 @@ public class Inventory : MonoBehaviour
             
             for (int i = 0; i < inventoryList.Count; i++)
             {
-                if (inventoryList[i] == type)
+                if (inventoryList[i].itemType == type)
                 {
                     count++;
                 }
@@ -227,7 +227,7 @@ public class Inventory : MonoBehaviour
         {
             for (int i = 0; i < inventoryList.Count; i++)
             {
-                if (inventoryList[i] == type)
+                if (inventoryList[i].itemType == type)
                 {
                     inventoryList.RemoveAt(i);
                     if (selectedItemIndex >= inventoryList.Count)

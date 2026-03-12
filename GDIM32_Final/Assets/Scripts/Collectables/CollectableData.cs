@@ -8,5 +8,6 @@ public class CollectableData : ScriptableObject
     public string itemName;
     public Sprite itemSprite;
     public itemType itemType;
+    public int keyId;
 }
 public enum itemType{Key, Meat};
