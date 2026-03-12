@@ -25,7 +25,7 @@ public class Door : MonoBehaviour
     {
         CheckIfOpen(this);
     }
-
+    
     
     private void doorLogic()
     {
@@ -37,6 +37,7 @@ public class Door : MonoBehaviour
         {
             canOpen = true;
             correctKey?.Invoke();
+
         } else if (index == 0)
         {
             Debug.Log("You dont have an item");

@@ -14,6 +14,8 @@ public class Pigeon : MonoBehaviour
 
     [SerializeField] private DialogueData hint;
 
+    [SerializeField] private GameObject finalKey;
+
     private int currentIndex = 0;
 
     private bool isOpeoned = false;
@@ -29,6 +31,7 @@ public class Pigeon : MonoBehaviour
     void Update()
     {
         updateText();
+
         if (Input.GetKeyDown(KeyCode.V))
         {
             nextStage();
@@ -37,6 +40,7 @@ public class Pigeon : MonoBehaviour
         {
             closeBox();
         }
+
         checkBox();
     }
 
@@ -91,4 +95,9 @@ public class Pigeon : MonoBehaviour
         currentIndex++;
     }
 
+    public void spawnFinalKey()
+    {
+        Vector3 keyPos = new Vector3(0, 0, 5f);
+        Instantiate(finalKey, this.transform.position + keyPos, Quaternion.identity);
+    }
 }
