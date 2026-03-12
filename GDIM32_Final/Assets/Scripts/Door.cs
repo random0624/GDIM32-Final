@@ -30,7 +30,8 @@ public class Door : MonoBehaviour
     private void doorLogic()
     {
         int index = playerInvetory.selectedItemIndex;
-        itemType currentItem = playerInvetory.inventoryList[index];
+        
+        itemType currentItem = playerInvetory.inventoryList[index].itemType; //Ransom - Added .itemType
 
         if (currentItem == itemType.Key)
         {
