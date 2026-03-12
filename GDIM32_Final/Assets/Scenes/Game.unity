@@ -2963,6 +2963,7 @@ MonoBehaviour:
   optionButton: {fileID: 1469465252}
   ExitButton: {fileID: 1469465251}
   hint: {fileID: 11400000, guid: 83bc0981f50d86047863391b525c3da8, type: 2}
+  finalKey: {fileID: 0}
 --- !u!65 &517985977
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3640,7 +3641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db7f0925720245b090f3270e8dd70a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryList: 
+  inventoryList: []
   selectedItemIndex: 0
   _meatCount: 0
   meatPrefab: {fileID: 1637490983}
@@ -3685,6 +3686,7 @@ MonoBehaviour:
   playerAnim: {fileID: 581312075}
   _lifeCount: 3
   _spawnPoint: {fileID: 1815624668}
+  mainCamera: {fileID: 0}
 --- !u!136 &581312074
 CapsuleCollider:
   m_ObjectHideFlags: 0

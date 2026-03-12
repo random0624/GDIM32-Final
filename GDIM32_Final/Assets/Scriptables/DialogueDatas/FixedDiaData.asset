@@ -15,6 +15,10 @@ MonoBehaviour:
   startingText:
   - Wanna Hear a hint?
   - Back for more?
+  - Think your smart?
+  - One final challenge?
   finalText:
-  - The First door is the same as an apple
+  - The first door is the same as an apple
   - The second door is the same as the sky
+  - The third door is similar to grass
+  - the final door should be just over there :3
