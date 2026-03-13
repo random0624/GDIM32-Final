@@ -5,6 +5,8 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
     public PlayerMovement Player {get; private set;}
 
+    public Door CurrentDoor {get; private set;}
+
     [SerializeField] GameObject _gameOverUI;
  
     private void Awake()
@@ -23,6 +25,14 @@ public class GameController : MonoBehaviour
             return;
         }
         Player = playerObj.GetComponent<PlayerMovement>();
+
+        GameObject doorObj = GameObject.FindGameObjectWithTag("Door");
+        if (playerObj == null)
+        {
+            Debug.LogError("GameController: No GameObject with tag 'Player' found in the scene. Assign the Player tag to your player.");
+            return;
+        }
+        CurrentDoor = playerObj.GetComponent<Door>();
     }
 
     void OnEnable()

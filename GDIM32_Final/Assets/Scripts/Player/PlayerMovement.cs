@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     public event GameListen birdClickedOn;
     private void Awake()
     {
-        mainCamera = Camera.main;
+         
     }
 
     public enum PlayerState
@@ -172,7 +172,7 @@ void Start()
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.name == "Door")
+                if (hit.transform.gameObject.GetComponent<Door>() != null)
                 {
                     doorClickedOn?.Invoke();
                 }

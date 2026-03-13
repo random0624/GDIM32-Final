@@ -24,18 +24,19 @@ public class Door : MonoBehaviour
     void Update()
     {
         CheckIfOpen(this);
+        Debug.Log(canOpen);
     }
     
     
     private void doorLogic()
     {
-        int index = playerInvetory.selectedItemIndex;
-        
+        int index = playerInvetory.selectedItemIndex; 
         itemType currentItem = playerInvetory.inventoryList[index].itemType; //Ransom - Added .itemType
 
         if (currentItem == itemType.Key)
         {
             canOpen = true;
+            playerInvetory.RemoveItem(currentItem);
             correctKey?.Invoke();
 
         } else if (index == 0)
