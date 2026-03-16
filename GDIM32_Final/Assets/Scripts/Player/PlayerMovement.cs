@@ -143,6 +143,11 @@ void Start()
         OnMeatThrownEvent?.Invoke();
     }
 
+    public Vector3 GetMeatLocation()
+    {
+        return _currentMeat.transform.position;
+    }
+
     private void UpdateAnim()
     {
         switch(_state)
@@ -194,4 +199,7 @@ void Start()
             }
         }
     }
+
+
+
 }
