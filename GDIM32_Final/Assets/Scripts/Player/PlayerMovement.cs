@@ -45,6 +45,9 @@ public class PlayerMovement : MonoBehaviour
     public delegate void GameListen();
     public event GameListen doorClickedOn;
     public event GameListen birdClickedOn;
+
+    public delegate void PigeonCallRequested();
+    public event PigeonCallRequested OnPigeonCallRequested;
     private void Awake()
     {
          
@@ -79,6 +82,12 @@ void Start()
         {
             MeatThrow();
             _inventory.RemoveItem(itemType.Meat);
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            OnPigeonCallRequested?.Invoke();
+            Debug.Log("Pigeon call requested");
         }
 
         ClickedSystem();

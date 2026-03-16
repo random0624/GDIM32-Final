@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour
     public PlayerMovement Player {get; private set;}
 
     public Door CurrentDoor {get; private set;}
+    public Pigeon CurrentPigeon { get; private set; }
 
     [SerializeField] GameObject _gameOverUI;
  
@@ -27,12 +28,16 @@ public class GameController : MonoBehaviour
         Player = playerObj.GetComponent<PlayerMovement>();
 
         GameObject doorObj = GameObject.FindGameObjectWithTag("Door");
-        if (playerObj == null)
+        if (doorObj == null)
         {
-            Debug.LogError("GameController: No GameObject with tag 'Player' found in the scene. Assign the Player tag to your player.");
+            Debug.LogError("GameController: No GameObject with tag 'Door' found in the scene.");
             return;
         }
-        CurrentDoor = playerObj.GetComponent<Door>();
+        CurrentDoor = doorObj.GetComponent<Door>();
+
+        Pigeon pigeon = FindObjectOfType<Pigeon>(true);
+        if (pigeon != null)
+            CurrentPigeon = pigeon;
     }
 
     void OnEnable()

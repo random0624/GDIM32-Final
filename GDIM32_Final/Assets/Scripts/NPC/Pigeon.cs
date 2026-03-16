@@ -115,6 +115,16 @@ public class Pigeon : MonoBehaviour
         currentNodeNum++;
     }
 
+    public void Enable()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void Disable()
+    {
+        gameObject.SetActive(false);
+    }
+
     private void SpawnFinalKey()
     {
         Instantiate(finalKey, transform.position + Vector3.forward, Quaternion.identity);
