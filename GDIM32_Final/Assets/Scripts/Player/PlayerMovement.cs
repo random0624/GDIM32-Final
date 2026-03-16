@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform _spawnPoint;
 
+    [SerializeField] private GameObject _currentMeat;
+
 
     [SerializeField] private Camera mainCamera;
 
@@ -128,11 +130,11 @@ void Start()
     private void MeatThrow()
     {
         _meatSpawnPoint = transform.position + transform.forward * 1.5f + Vector3.up;
-        GameObject meat = Instantiate(_meat,_meatSpawnPoint, Quaternion.identity);
+        _currentMeat= Instantiate(_meat,_meatSpawnPoint, Quaternion.identity);
 
-        if (meat != null)
+        if (_currentMeat != null)
         {
-            Rigidbody rb = meat.GetComponent<Rigidbody>();
+            Rigidbody rb = _currentMeat.GetComponent<Rigidbody>();
 
             Vector3 throwDirection = transform.forward + Vector3.up * 0.3f;
             rb.AddForce(throwDirection.normalized * _meatThrowForce, ForceMode.Impulse);
