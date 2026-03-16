@@ -36,7 +36,7 @@ public class Lion : MonoBehaviour
     private Vector3 _lionTarget;
     
     private Vector3 _meatLocation;
-
+    private bool _canSeeMeat;
     public enum LionState
     {
         _idle, _wandering, _pursuing
@@ -97,6 +97,7 @@ public class Lion : MonoBehaviour
                 break;
 
             case LionState._wandering:
+                
                 _lionNeedsNewDestination = false;
                 _agent.isStopped = false;
                 _agent.speed = 3.5f;
@@ -163,8 +164,17 @@ public class Lion : MonoBehaviour
     public void Pursuing()
     {
         _animator.Play("run");
+
+
         _lionTarget = _playerTransform.position;
+
+        if (_canSeeMeat)
+        {
+            _lionTarget=_meatLocation;
+        }
         _agent.SetDestination(_lionTarget);
+
+        _canSeeMeat = false;
  
         
     }
@@ -266,7 +276,7 @@ public class Lion : MonoBehaviour
         if (distance <= _triggerDistance)
         {
             Debug.Log("can see meat");
-            _lionTarget = _meatLocation;
+            _canSeeMeat = true;
             ChangeState(LionState._pursuing);
             Debug.Log("eating");
             ChangeState(LionState._idle);

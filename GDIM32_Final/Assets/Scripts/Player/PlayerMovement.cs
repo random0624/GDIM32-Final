@@ -40,7 +40,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform _spawnPoint;
 
     [SerializeField] private GameObject _currentMeat;
-
+    private float _meatTimer;
+    [SerializeField] private float _eatDuration;
 
     [SerializeField] private Camera mainCamera;
 
@@ -138,6 +139,15 @@ void Start()
 
             Vector3 throwDirection = transform.forward + Vector3.up * 0.3f;
             rb.AddForce(throwDirection.normalized * _meatThrowForce, ForceMode.Impulse);
+            /*
+            _meatTimer+= Time.deltaTime;
+
+            if (_meatTimer >= _eatDuration)
+            {
+                GameObject.Destroy(_currentMeat);
+
+            }
+            */
         }
 
         OnMeatThrownEvent?.Invoke();
