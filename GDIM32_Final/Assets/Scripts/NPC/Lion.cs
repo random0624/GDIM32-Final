@@ -34,7 +34,7 @@ public class Lion : MonoBehaviour
     public event LionTriggered _lionTriggered;
 
     private Vector3 _lionTarget;
-
+    
     private Vector3 _meatLocation;
 
     public enum LionState
@@ -261,11 +261,15 @@ public class Lion : MonoBehaviour
 
     private void CheckMeatDistance()
     {
-        float distance = Vector3.Distance(transform.position, _lionTarget);
+        float distance = Vector3.Distance(transform.position, _meatLocation);
 
         if (distance <= _triggerDistance)
         {
-
+            Debug.Log("can see meat");
+            _lionTarget = _meatLocation;
+            ChangeState(LionState._pursuing);
+            Debug.Log("eating");
+            ChangeState(LionState._idle);
         }
       
     }
@@ -273,12 +277,16 @@ public class Lion : MonoBehaviour
 
     private void ReactToMeatThrow()
     {
-        _lionTarget = GameController.Instance.Player.GetMeatLocation();
+        _meatLocation = GameController.Instance.Player.GetMeatLocation();
+
+        Debug.Log(_meatLocation);
+        CheckMeatDistance();
     }
 
     private void OnEnable()
     {
         GameController.Instance.Player.OnMeatThrownEvent += ReactToMeatThrow;
+        
 
     }
 

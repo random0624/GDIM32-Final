@@ -46,7 +46,7 @@ public class Pigeon : MonoBehaviour
         
         checkBox();
 
-        Debug.Log(currentNodeNum);
+        //Debug.Log(currentNodeNum);
     }
 
     private void OpenBox()

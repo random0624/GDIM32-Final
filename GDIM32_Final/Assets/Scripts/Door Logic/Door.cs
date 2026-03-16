@@ -24,7 +24,7 @@ public class Door : MonoBehaviour
     void Update()
     {
         CheckIfOpen(this);
-        Debug.Log(canOpen);
+       // Debug.Log(canOpen);
     }
     
     

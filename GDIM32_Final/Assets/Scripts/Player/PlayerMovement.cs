@@ -141,6 +141,7 @@ void Start()
         }
 
         OnMeatThrownEvent?.Invoke();
+        Debug.Log("meat thrown");
     }
 
     public Vector3 GetMeatLocation()
