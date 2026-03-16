@@ -6,6 +6,5 @@ using UnityEngine;
 public class DialogueData : ScriptableObject
 {
     [Header("Properties")]
-    public List<string> startingText;
-    public List<string> finalText;
+    public string [] lines;
 }

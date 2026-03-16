@@ -12,11 +12,14 @@ public class Pigeon : MonoBehaviour
     [SerializeField] private Button optionButton;
     [SerializeField] private Button ExitButton;
 
-    [SerializeField] private DialogueData hint;
+    [SerializeField] private DialogueData[] _npcLines;
 
     [SerializeField] private GameObject finalKey;
 
-    private int currentIndex = 0;
+    private DialogueData currentNode;
+
+    private int currentIndex;
+    private int currentNodeNum = 0;
 
     private bool isOpeoned = false;
     private bool nextText = false;
@@ -25,23 +28,25 @@ public class Pigeon : MonoBehaviour
     void Start()
     {
         GameController.Instance.Player.birdClickedOn += OpenBox;
-    }
+        GameController.Instance.CurrentDoor.correctKey += UpdateNodeLine;
+     }
 
     // Update is called once per frame
     void Update()
     {
-        updateText();
 
         if (Input.GetKeyDown(KeyCode.V))
         {
-            nextStage();
+            AdvanceDialogue();
         }
         if(Input.GetKeyDown(KeyCode.Tab))
         {
             closeBox();
         }
-
+        
         checkBox();
+
+        Debug.Log(currentNodeNum);
     }
 
     private void OpenBox()
@@ -58,6 +63,7 @@ public class Pigeon : MonoBehaviour
         if (isOpeoned)
         {
             dialougeBox.SetActive(true);
+            UpdateText();
         }
         if(!isOpeoned)
         {
@@ -78,26 +84,39 @@ public class Pigeon : MonoBehaviour
         nextText = true;
     }
 
-    public void updateText()
+    public void UpdateText()
     {
-        if(!nextText)
-        {
-            hintText.text = hint.startingText[currentIndex];
-        }
-        if(nextText)
-        {
-            hintText.text = hint.finalText[currentIndex];
-        }
-    }
-
-    public void currentText()
-    {
-        currentIndex++;
+        currentNode = _npcLines[currentNodeNum];
+        hintText.text = currentNode.lines[currentIndex];
     }
 
     public void spawnFinalKey()
     {
         Vector3 keyPos = new Vector3(0, 0, 5f);
         Instantiate(finalKey, this.transform.position + keyPos, Quaternion.identity);
+    }
+
+    private void AdvanceDialogue()
+    {
+        if (currentIndex < currentNode.lines.Length - 1)
+        {
+            currentIndex++;
+            UpdateText();
+        }
+        else
+        {
+            currentIndex = 0;
+            closeBox();
+        }
+    }
+
+    private void UpdateNodeLine()
+    {
+        currentNodeNum++;
+    }
+
+    private void SpawnFinalKey()
+    {
+        Instantiate(finalKey, transform.position + Vector3.forward, Quaternion.identity);
     }
 }
