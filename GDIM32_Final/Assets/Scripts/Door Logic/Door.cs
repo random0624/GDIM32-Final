@@ -14,6 +14,8 @@ public class Door : MonoBehaviour
     public event ListenToEvent wrongKey;
     public event ListenToEvent correctKey;
 
+    private int doorsOponed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +33,7 @@ public class Door : MonoBehaviour
     private void doorLogic()
     {
         int index = playerInvetory.selectedItemIndex; 
-        itemType currentItem = playerInvetory.inventoryList[index].itemType; //Ransom - Added .itemType
+        itemType currentItem = playerInvetory.inventoryList[index].itemType;
 
         if (currentItem == itemType.Key)
         {
@@ -53,7 +55,16 @@ public class Door : MonoBehaviour
     {
         if (canOpen == true)
         {
-            store.gameObject.SetActive(false);
+            if (doorsOponed >= 3)
+            {
+                store.gameObject.SetActive(false);
+            }
+            else
+            {
+                canOpen = false;
+                store.gameObject.transform.position = this.transform.position + Vector3.forward / 2;
+                doorsOponed++;
+            }
             doorText.gameObject.SetActive(true);
         }
         else
