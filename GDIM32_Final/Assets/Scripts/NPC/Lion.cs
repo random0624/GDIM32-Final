@@ -33,7 +33,7 @@ public class Lion : MonoBehaviour
     public delegate void LionTriggered();
     public event LionTriggered _lionTriggered;
 
-
+    private Vector3 _lionTarget;
     
 
     public enum LionState
@@ -162,7 +162,8 @@ public class Lion : MonoBehaviour
     public void Pursuing()
     {
         _animator.Play("run");
-        _agent.SetDestination(_playerTransform.position);
+        _lionTarget = _playerTransform.position;
+        _agent.SetDestination(_lionTarget);
  
         
     }

@@ -32,12 +32,12 @@ public class LifeCountUI : MonoBehaviour
     }
     void OnEnable()
     {
-        FindObjectOfType<PlayerMovement>().OnLoseLife += LoseLife;
+        GameController.Instance.Player.OnLoseLife += LoseLife;
     }
 
     void OnDisable()
     {
-        FindObjectOfType<PlayerMovement>().OnLoseLife -= LoseLife;
+        GameController.Instance.Player.OnLoseLife -= LoseLife;
     }
 
     
