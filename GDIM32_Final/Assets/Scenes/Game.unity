@@ -3829,6 +3829,8 @@ MonoBehaviour:
   playerAnim: {fileID: 581312075}
   _lifeCount: 3
   _spawnPoint: {fileID: 1815624668}
+  _currentMeat: {fileID: 0}
+  _eatDuration: 8
   mainCamera: {fileID: 1508880298}
 --- !u!136 &581312074
 CapsuleCollider:
@@ -11161,7 +11163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ffade3bf43576548852e55318e5d53b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _idleDuration: 3
+  _idleDuration: 6
   _agent: {fileID: 1819754086}
   _wanderDistance: 10
   _triggerDistance: 6
