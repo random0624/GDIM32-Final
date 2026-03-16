@@ -37,14 +37,14 @@ public class GameController : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerMovement player = FindObjectOfType<PlayerMovement>();
-        player.OnLoseLife += CheckGameOver;
+       // PlayerMovement player = FindObjectOfType<PlayerMovement>();
+        Player.OnLoseLife += CheckGameOver;
     }
 
     void OnDisable()
     {
-        PlayerMovement player = FindObjectOfType<PlayerMovement>();
-        player.OnLoseLife -= CheckGameOver;
+       // PlayerMovement player = FindObjectOfType<PlayerMovement>();
+        Player.OnLoseLife -= CheckGameOver;
     }
     private void CheckGameOver()
     {
