@@ -19,7 +19,8 @@ public class Lion : MonoBehaviour
     [SerializeField] private float _viewAngle;
     [SerializeField] private LayerMask _obstacleMask;
     [SerializeField] private LayerMask _playerMask;
-    [SerializeField] private GameObject amenBreak;
+    [SerializeField] private AudioSource amenBreak;
+    [SerializeField] private AudioSource jungleAudio;
 
     
     private float _stateTimer;
@@ -119,8 +120,8 @@ public class Lion : MonoBehaviour
                 _agent.isStopped = true;
                 _animator.SetBool("Moving", false);
                 _animator.SetTrigger("Calm");
-                
                 break;
+
 
             case LionState._wandering:
                 
@@ -143,7 +144,8 @@ public class Lion : MonoBehaviour
                 //add code here that doesn't let it move out of wandering unless destination met OR navmesh is given a new destination
                 _animator.SetBool("Moving", true);
                 _animator.SetTrigger("Calm");
-                
+                jungleAudio.Play ();
+                amenBreak.Stop();
                 break;
 
             case LionState._pursuing:
@@ -153,7 +155,8 @@ public class Lion : MonoBehaviour
                 _animator.SetBool("Moving", true);
                 _animator.SetTrigger("Triggered");
                 _animator.Play("roar");
-                Instantiate(amenBreak);
+                jungleAudio.Stop();
+                amenBreak.Play();
                 break;
         }
     }
@@ -473,5 +476,21 @@ public class Lion : MonoBehaviour
         GameController.Instance.Player.OnPlayerRevealed -= OnPlayerRevealed;
         GameController.Instance.CurrentDoor.wrongKey -= OnPlayerWrongKey;
         GameController.Instance.CurrentPuzzle.incorrectAnswer -= OnPlayerWrongAnswer;
+    }
+
+    private void playJungleAudio()
+    {
+        amenBreak.GetComponent<AudioSource>().Stop();
+        jungleAudio.GetComponent<AudioSource>().Stop();
+
+        Instantiate(jungleAudio);
+    }
+
+    private void playFranticAudio()
+    {
+        amenBreak.GetComponent<AudioSource>().Stop();
+        jungleAudio.GetComponent<AudioSource>().Stop();
+
+        Instantiate(amenBreak);
     }
 }
