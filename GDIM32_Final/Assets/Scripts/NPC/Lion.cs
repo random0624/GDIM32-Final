@@ -71,6 +71,8 @@ public class Lion : MonoBehaviour
             Debug.DrawRay(_eyepoint.position, direction, CanSeePlayer()? Color.blue:Color.red); 
         }
 
+        CheckStuck();
+
         //debugging
 
         /*
@@ -271,7 +273,7 @@ public class Lion : MonoBehaviour
 
         stuckTimer += Time.deltaTime;
 
-        if( stuckTimer >= 2.0f)
+        if( stuckTimer >= 2.0f &&_state ==LionState._wandering)
         {
             Vector3 newPosition= transform.position;
 
