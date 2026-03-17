@@ -10,6 +10,7 @@ public class Door : MonoBehaviour
 
     [SerializeField] private Inventory playerInvetory;
     [SerializeField] private TMP_Text doorText;
+    [SerializeField] private GameObject winText;
 
     [SerializeField] private Vector3[] nextLocation;
 
@@ -18,12 +19,15 @@ public class Door : MonoBehaviour
     public event ListenToEvent correctKey;
     public event ListenToEvent finalDoor;
 
+    private bool gameEnded = false;
+
     private int doorsOponed = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         GameController.Instance.Player.doorClickedOn += doorLogic;
+        GameController.Instance._gameOver += CheckGameOver;
     }
 
     // Update is called once per frame
@@ -32,6 +36,7 @@ public class Door : MonoBehaviour
        transform.position = nextLocation[doorsOponed];
        CheckIndex();
        CheckIfOpen(this);
+       CheckGameOver();
     }
     
     
@@ -80,6 +85,8 @@ public class Door : MonoBehaviour
         if(doorsOponed >= 3)
         {
             this.gameObject.SetActive(false);
+            winText.SetActive(true);
+            gameEnded = true;
         }
     }
 
@@ -92,4 +99,17 @@ public class Door : MonoBehaviour
         doorText.gameObject.SetActive(false);
     }
 
+    private void GameOver()
+    {
+        gameEnded = true;
+    }
+
+    private void CheckGameOver()
+    {
+        if (gameEnded)
+        {
+            Time.timeScale = 0.0f;
+
+        }
+    }
 }
