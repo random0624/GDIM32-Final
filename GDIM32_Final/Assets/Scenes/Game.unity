@@ -2544,7 +2544,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7885b69f1caa8ad4db77aecccb9e28cb, type: 2}
   - {fileID: 11400000, guid: 83bc0981f50d86047863391b525c3da8, type: 2}
   - {fileID: 11400000, guid: 1e728e015b01ee84e9f01bbb4c788324, type: 2}
-  finalKey: {fileID: 9070329235674524392, guid: fc4c2c6ae23d43f4dbbbe8a938c6badb, type: 3}
+  keyLocation: {x: -5.5, y: 0.37, z: -4.12}
+  finalKey: {fileID: 9129136310747271437, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
 --- !u!65 &517985977
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3178,6 +3179,7 @@ MonoBehaviour:
   keySprite: {fileID: 21300000, guid: 3b270a7035afa41a186f82dd18659344, type: 3}
   meatSprite: {fileID: 21300000, guid: 3817739b11eb441bf8f631139bd0e3b7, type: 3}
   pickUpItem_gameObject: {fileID: 1985082563}
+  interactText: {fileID: 0}
 --- !u!114 &581312073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4234,10 +4236,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _questionText: {fileID: 1716199979}
+  _option1Text: {fileID: 1517046439}
+  _option2Text: {fileID: 1811086041}
+  _thingText: {fileID: 1607843623}
   key: {fileID: 9129136310747271437, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
+  option1:
+  - Blue
+  - Bee Movie
+  option2:
+  - Urple
+  - Avatar
   question:
-  - What color is the sky
-  - What was the kamen rider show in 2001?
+  - What color is the sky?
+  - What was the higher grossing movie?
+  nextLocation:
+  - {x: -2.08, y: 1.95, z: 17.455}
+  - {x: 9.12, y: 1.95, z: 1.24}
+  - {x: 0, y: 0, z: 0}
   dialougeBox: {fileID: 1613166217}
   correctIndex: 0100000002000000
 --- !u!65 &757146293
@@ -4320,7 +4335,7 @@ Transform:
   m_GameObject: {fileID: 757146291}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.08, y: 1.95, z: 17.455}
+  m_LocalPosition: {x: 9.12, y: 1.95, z: 1.24}
   m_LocalScale: {x: 2.5389, y: 1, z: 0.14656}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5024,6 +5039,11 @@ MonoBehaviour:
   canOpen: 0
   playerInvetory: {fileID: 581312072}
   doorText: {fileID: 173202699}
+  nextLocation:
+  - {x: 28.03, y: -0.05681896, z: 0.223}
+  - {x: -8.37, y: -0.05681896, z: 0.223}
+  - {x: -27.23, y: -0.05681896, z: 0.223}
+  - {x: 0, y: 0, z: 0}
 --- !u!4 &835429007
 Transform:
   m_ObjectHideFlags: 0
@@ -5033,7 +5053,7 @@ Transform:
   m_GameObject: {fileID: 835429004}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 28.03, y: -0.056818962, z: 0.22300005}
+  m_LocalPosition: {x: -27.23, y: -0.056818962, z: 0.22300005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12056,63 +12076,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecc15abaa2d4963428bdf7fc9eb09410, type: 3}
---- !u!1001 &5593416730212817354
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5254131503606063902, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 8.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 5254131503606063902, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.032
-      objectReference: {fileID: 0}
-    - target: {fileID: 5254131503606063902, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3.122
-      objectReference: {fileID: 0}
-    - target: {fileID: 5254131503606063902, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5254131503606063902, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5254131503606063902, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5254131503606063902, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5254131503606063902, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5254131503606063902, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5254131503606063902, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9129136310747271437, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
-      propertyPath: m_Name
-      value: CurrentKey
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -12126,7 +12089,6 @@ SceneRoots:
   - {fileID: 1637490982}
   - {fileID: 749533483}
   - {fileID: 2065446634}
-  - {fileID: 5593416730212817354}
   - {fileID: 1655128355}
   - {fileID: 1251402256}
   - {fileID: 517985980}

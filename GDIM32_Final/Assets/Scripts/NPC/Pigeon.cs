@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +9,17 @@ public class Pigeon : MonoBehaviour
 {
     [SerializeField] private GameObject dialougeBox;
 
+    //[SerializeField] private float reach = 5f;
+    //[SerializeField] private Camera playerCamera;
+    ///[SerializeField] private GameObject interactText;
+
     [SerializeField] private TMP_Text hintText;
     [SerializeField] private Button optionButton;
     [SerializeField] private Button ExitButton;
 
     [SerializeField] private DialogueData[] _npcLines;
+
+    [SerializeField] private Vector3 keyLocation;
 
     [SerializeField] private GameObject finalKey;
 
@@ -32,12 +39,13 @@ public class Pigeon : MonoBehaviour
         GameController.Instance.Player.birdClickedOn += OpenBox;
         GameController.Instance.CurrentDoor.correctKey += UpdateNodeLine;
         GameController.Instance.CurrentDoor.finalDoor += ActivateFinal;
-   
-     }
+
+    }
 
     // Update is called once per frame
     void Update()
     {
+
 
         if (Input.GetKeyDown(KeyCode.V))
         {
@@ -49,7 +57,6 @@ public class Pigeon : MonoBehaviour
         }
         
         checkBox();
-
         //Debug.Log(currentNodeNum);
     }
 
@@ -103,9 +110,9 @@ public class Pigeon : MonoBehaviour
         hintText.text = currentNode.lines[currentIndex];
     }
 
-    public void spawnFinalKey()
+    public void SpawnFinalKey()
     {
-        Instantiate(finalKey, this.gameObject.transform.position + Vector3.forward, Quaternion.identity);
+        Instantiate(finalKey, keyLocation, Quaternion.identity);
     }
 
     private void AdvanceDialogue()
@@ -137,8 +144,4 @@ public class Pigeon : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void SpawnFinalKey()
-    {
-        Instantiate(finalKey, transform.position + Vector3.forward, Quaternion.identity);
-    }
 }
