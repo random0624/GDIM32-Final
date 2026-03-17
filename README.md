@@ -63,8 +63,6 @@ A new feature of the game is the puzzle system, that is a game object that will 
 
 I also contributed by adding music to the lion states that will play music depending on what state the lion is in.
 
-
-
 ### Team Member Name 3
 Ransom Liu
 The pigeon can be shown/hidden using the "C" button. This needs to happen without the player script ever knowing about the pigeon.
@@ -94,6 +92,7 @@ Cite any open-source assets here. Put them in a LIST, and use correctly formatte
 [Door Asset](https://www.fab.com/listings/41516fcd-3362-4a4f-8f98-c72c74c60dfa)
 
 [Jungle Music](https://www.youtube.com/watch?v=QJWxzGdrhpY)
+[Amen Break](https://www.youtube.com/watch?v=kIy7oathtVM&list=RDkIy7oathtVM&start_radio=1)
 
 [Lion Asset- Model and animations](https://sketchfab.com/3d-models/animated-lion-3d-animal-model-1c3cd9595ae34eee92f957d67facc08d)
 
