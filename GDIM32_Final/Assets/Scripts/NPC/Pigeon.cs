@@ -24,12 +24,15 @@ public class Pigeon : MonoBehaviour
     private bool isOpeoned = false;
     private bool nextText = false;
 
+    private bool finalDone = false;
+
     // Start is called before the first frame update
     void Start()
     {
         GameController.Instance.Player.birdClickedOn += OpenBox;
         GameController.Instance.CurrentDoor.correctKey += UpdateNodeLine;
-        GameController.Instance.CurrentDoor.finalDoor += spawnFinalKey;
+        GameController.Instance.CurrentDoor.finalDoor += ActivateFinal;
+   
      }
 
     // Update is called once per frame
@@ -50,11 +53,20 @@ public class Pigeon : MonoBehaviour
         //Debug.Log(currentNodeNum);
     }
 
+    private void ActivateFinal()
+    {
+        finalDone = true;
+    }
+
     private void OpenBox()
     {
         if (!isOpeoned)
         {
             isOpeoned = true;
+        }
+        if (finalDone == true)
+        {
+            SpawnFinalKey();
         }
 
     }
@@ -93,8 +105,7 @@ public class Pigeon : MonoBehaviour
 
     public void spawnFinalKey()
     {
-        Vector3 keyPos = new Vector3(0, 0, 5f);
-        Instantiate(finalKey, this.transform.position + keyPos, Quaternion.identity);
+        Instantiate(finalKey, this.gameObject.transform.position + Vector3.forward, Quaternion.identity);
     }
 
     private void AdvanceDialogue()

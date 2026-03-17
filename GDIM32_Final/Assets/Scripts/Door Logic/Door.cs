@@ -26,6 +26,7 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       CheckIndex();
        CheckIfOpen(this);
     }
     
@@ -47,7 +48,7 @@ public class Door : MonoBehaviour
         }
         else
         {
-           wrongKey?.Invoke();
+            wrongKey?.Invoke();
         }
     }
 
@@ -55,29 +56,28 @@ public class Door : MonoBehaviour
     {
         if (canOpen == true)
         {
-            if (doorsOponed >= 2)
-            {
-                finalDoor?.Invoke();
-                Debug.Log("done");
-                this.gameObject.SetActive(false);
-            }
-            else
-            {
                 doorText.gameObject.SetActive(true);
-                StartCoroutine(waitSeconds(3));
+
+                StartCoroutine(waitSeconds());
+
+                doorText.gameObject.SetActive(false);
                 canOpen = false;
                 store.gameObject.transform.position = this.transform.position + Vector3.forward / 2;
                 doorsOponed++;
-            }
-        }
-        else
-        {
-            doorText.gameObject.SetActive(false);
         }
     }
-    IEnumerator waitSeconds(int seconds)
+    IEnumerator waitSeconds()
     {
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSeconds(3);
+    }
+
+    private void CheckIndex()
+    {
+        if(doorsOponed >= 2)
+        {
+            finalDoor?.Invoke();
+            this.gameObject.SetActive(false);
+        }
     }
 
 }
