@@ -37,6 +37,10 @@ public class Lion : MonoBehaviour
     
     private Vector3 _meatLocation;
     private bool _canSeeMeat;
+
+
+    private Vector3 _stuckStartPosition;
+    private float _stuckTimer;
     public enum LionState
     {
         _idle, _wandering, _pursuing
@@ -51,6 +55,7 @@ public class Lion : MonoBehaviour
         
         _triggered = false;
         _lionNeedsNewDestination = true;
+        _stuckStartPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -71,7 +76,11 @@ public class Lion : MonoBehaviour
             Debug.DrawRay(_eyepoint.position, direction, CanSeePlayer()? Color.blue:Color.red); 
         }
 
-        CheckStuck();
+        if (_state != LionState._idle)
+        {
+            CheckStuck();
+        }
+       
 
         //debugging
 
@@ -168,17 +177,26 @@ public class Lion : MonoBehaviour
         _animator.Play("run");
 
 
-        _lionTarget = _playerTransform.position;
+       
 
         if (_canSeeMeat)
         {
             _lionTarget=_meatLocation;
         }
+
+        else
+        {
+            _lionTarget = _playerTransform.position;
+        }
         _agent.SetDestination(_lionTarget);
 
-        _canSeeMeat = false;
- 
-        
+      //  _canSeeMeat = false;
+        if (_canSeeMeat && !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
+        {
+            _canSeeMeat = false;
+            ChangeState(LionState._idle);
+        }
+
     }
 
     private void CheckDistance()
@@ -267,24 +285,71 @@ public class Lion : MonoBehaviour
 
     private void CheckStuck()
     {
-        Vector3 startPosition = transform.position;
+        
 
-        float stuckTimer = 0;
+       
 
-        stuckTimer += Time.deltaTime;
+        _stuckTimer += Time.deltaTime;
 
-        if( stuckTimer >= 2.0f &&_state ==LionState._wandering)
+        if (_stuckTimer >= 1f)
+        {
+            float movedDistance = Vector3.Distance(_stuckStartPosition, transform.position);
+
+            if (movedDistance <= 0.5f && !_agent.pathPending)
+            {
+                RecoverFromStuck();
+            }
+
+            _stuckStartPosition = transform.position;
+            _stuckTimer = 0f;
+        }
+        /*
+
+        if( _stuckTimer >= 0.5f)
         {
             Vector3 newPosition= transform.position;
 
-            if(Vector3.Distance(startPosition, newPosition) <= 2)
+
+            if(Vector3.Distance(_stuckStartPosition, newPosition) <= 2)
             {
                 // _lionNeedsNewDestination = true;
+                Debug.Log("lion is stuck");
                 ChangeState(LionState._wandering);
             }
         }
+
+        _stuckTimer = 0;
+        _stuckStartPosition = transform.position;
+        */
     }
 
+    private void RecoverFromStuck()
+    {
+        Debug.Log("lion is stuck");
+
+        _agent.ResetPath();
+
+        for (int i = 0; i < 8; i++)
+        {
+            Vector3 randomDirection = Random.insideUnitSphere * _wanderDistance;
+            randomDirection.y = 0f;
+
+            Vector3 candidate = transform.position + randomDirection;
+
+            if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, _wanderDistance, NavMesh.AllAreas))
+            {
+                NavMeshPath path = new NavMeshPath();
+
+                if (_agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete)
+                {
+                    _currentLionWanderingPosition = hit.position;
+                    _agent.SetDestination(hit.position);
+                    _state = LionState._wandering;
+                    return;
+                }
+            }
+        }
+    }
 
     /*
     private void ReactToMeatThrow()
@@ -315,7 +380,8 @@ public class Lion : MonoBehaviour
     private void ReactToMeatThrow()
     {
         _meatLocation = GameController.Instance.Player.GetMeatLocation();
-
+        _canSeeMeat = true;
+        ChangeState(LionState._pursuing);
         Debug.Log(_meatLocation);
         CheckMeatDistance();
     }
