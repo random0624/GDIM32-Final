@@ -40,7 +40,11 @@ public class Lion : MonoBehaviour
     
     [SerializeField] private float _meatReachDistance = 1.0f;
     [SerializeField] private float _meatNoticeDistance = 10f;
-   
+
+    private bool _isEatingMeat;
+    private float _meatPauseTimer;
+
+    [SerializeField] private float _meatPauseDuration = 4f;
 
     private Vector3 _stuckStartPosition;
     private float _stuckTimer;
@@ -64,6 +68,21 @@ public class Lion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (_isEatingMeat)
+        {
+            _meatPauseTimer -= Time.deltaTime;
+            _agent.isStopped = true;
+            _animator.Play("idle");
+
+            if (_meatPauseTimer <= 0f)
+            {
+                _isEatingMeat = false;
+                ChangeState(LionState._idle);
+            }
+
+            return;
+        }
         switch (_state)
         {
             case LionState._idle: Idle(); break;
@@ -205,6 +224,8 @@ public class Lion : MonoBehaviour
         */
 
         //redo
+
+        /* safe ver
         _animator.Play("run");
 
         if (_canSeeMeat)
@@ -232,6 +253,34 @@ public class Lion : MonoBehaviour
 
         _lionTarget = _playerTransform.position;
         _agent.isStopped = false;
+        _agent.SetDestination(_lionTarget);
+        */
+
+        _animator.Play("run");
+        _agent.isStopped = false;
+
+        // Meat mode: no line of sight, only go to stored meat location
+        if (_canSeeMeat)
+        {
+            _lionTarget = _meatLocation;
+            _agent.SetDestination(_lionTarget);
+
+            if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance + 0.1f)
+            {
+                _canSeeMeat = false;
+                _isEatingMeat = true;
+                _meatPauseTimer = _meatPauseDuration;
+
+                _agent.ResetPath();
+                _agent.isStopped = true;
+                _animator.Play("idle");
+            }
+
+            return;
+        }
+
+        // Normal player pursuit
+        _lionTarget = _playerTransform.position;
         _agent.SetDestination(_lionTarget);
     }
 
@@ -272,8 +321,8 @@ public class Lion : MonoBehaviour
         }
         */
 
-        //had to redo
-
+        //had to redo (safe ver)
+        
         if (_canSeeMeat)
         {
             return;
@@ -321,7 +370,8 @@ public class Lion : MonoBehaviour
             ChangeState(LionState._wandering);
         }
         //   Debug.Log("Distance: " + distanceToPlayer + " | InRange: " + _playerInRange + " | CanSeePlayer: " + canSeePlayer + " | State: " + _state + " | CanSeeMeat: " + _canSeeMeat);
-
+        
+      
 
     }
 
@@ -525,7 +575,7 @@ public class Lion : MonoBehaviour
 
     private void ReactToMeatThrow()
     {
-
+        /*safe ver
         Vector3 thrownMeatLocation = GameController.Instance.Player.GetMeatLocation();
 
         float distanceToMeat = Vector3.Distance(transform.position, thrownMeatLocation);
@@ -550,6 +600,36 @@ public class Lion : MonoBehaviour
         else
         {
             Debug.Log("Meat outside notice distance");
+        }
+        */
+        Vector3 thrownMeatLocation = GameController.Instance.Player.GetMeatLocation();
+
+        float distanceToMeat = Vector3.Distance(transform.position, thrownMeatLocation);
+        Debug.Log("Distance to thrown meat: " + distanceToMeat);
+
+
+        if (distanceToMeat > _meatNoticeDistance)
+        {
+            Debug.Log("Meat outside notice distance");
+            return;
+        }
+
+        if (NavMesh.SamplePosition(thrownMeatLocation, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+        {
+            _meatLocation = hit.position;
+            _canSeeMeat = true;
+
+            _agent.ResetPath();
+            _agent.isStopped = false;
+            _agent.SetDestination(_meatLocation);
+
+            Debug.Log("Lion noticed meat at: " + _meatLocation);
+
+            ChangeState(LionState._pursuing);
+        }
+        else
+        {
+            Debug.Log("No valid navmesh point near meat");
         }
     }
 
