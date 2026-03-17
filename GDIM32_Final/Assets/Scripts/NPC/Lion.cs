@@ -396,12 +396,28 @@ public class Lion : MonoBehaviour
 //State is NOT changed when player is revealed
     private void OnPlayerRevealed() { }
 
+
+    private void OnPlayerWrongKey()
+    {
+        _lionTarget= _playerTransform.position;
+        ChangeState(LionState._pursuing);
+    }
+
+    private void OnPlayerWrongAnswer()
+    {
+        _lionTarget = _playerTransform.position;
+        ChangeState(LionState._pursuing);
+    }
     private void OnEnable()
     {
         GameController.Instance.Player.OnMeatThrownEvent += ReactToMeatThrow;
         GameController.Instance.Player.OnPlayerHidden += OnPlayerHidden;
         GameController.Instance.Player.OnPlayerRevealed += OnPlayerRevealed;
-        
+        GameController.Instance.CurrentDoor.wrongKey += OnPlayerWrongKey;
+        GameController.Instance.CurrentPuzzle.incorrectAnswer += OnPlayerWrongAnswer;
+
+
+
     }
 
     private void OnDisable()
@@ -409,5 +425,7 @@ public class Lion : MonoBehaviour
         GameController.Instance.Player.OnMeatThrownEvent -= ReactToMeatThrow;
         GameController.Instance.Player.OnPlayerHidden -= OnPlayerHidden;
         GameController.Instance.Player.OnPlayerRevealed -= OnPlayerRevealed;
+        GameController.Instance.CurrentDoor.wrongKey -= OnPlayerWrongKey;
+        GameController.Instance.CurrentPuzzle.incorrectAnswer -= OnPlayerWrongAnswer;
     }
 }
