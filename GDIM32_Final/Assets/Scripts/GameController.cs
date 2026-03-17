@@ -11,7 +11,9 @@ public class GameController : MonoBehaviour
     public PuzzleLogic CurrentPuzzle { get; private set;}
 
     [SerializeField] GameObject _gameOverUI;
- 
+
+    public delegate void GameOver();
+    public event GameOver _gameOver;   
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -65,7 +67,9 @@ public class GameController : MonoBehaviour
     {
         if (Player._lifeCount <= 0)
         {
+
             Debug.Log("Game Over");
+            _gameOver?.Invoke();
             _gameOverUI.SetActive(true);
             Time.timeScale = 0.0f;
         }
