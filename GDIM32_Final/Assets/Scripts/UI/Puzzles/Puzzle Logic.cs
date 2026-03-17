@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PuzzleLogic : MonoBehaviour
 {
-    [SerializeField] private TMP_InputField _playerAnswer;
+    //[SerializeField] private TMP_InputField _playerAnswer;
+    [SerializeField] private Button but1;
+    [SerializeField] private Button but2;
+
     [SerializeField] private TMP_Text _questionText;
     [SerializeField] private GameObject key;
     [SerializeField] private string answer;
@@ -17,6 +22,8 @@ public class PuzzleLogic : MonoBehaviour
     public delegate void GameListen();
     public event GameListen correctAnswer;
     public event GameListen incorrectAnswer;
+
+    [SerializeField] private int correctIndex;
 
     private bool isOpeoned;
 
@@ -30,9 +37,37 @@ public class PuzzleLogic : MonoBehaviour
     void Update()
     {
         checkBox();
-        QuestionLogic(_playerAnswer);
+        
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if(correctIndex == 1)
+            {
+                CorrectAnswer();
+                closeBox();
+            }
+            else
+            {
+                IncorrectAnswer();
+                closeBox();
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (correctIndex == 1)
+            {
+                IncorrectAnswer();
+                closeBox();
+            }
+            else
+            {
+                CorrectAnswer();
+                closeBox();
+            }
+        }
+        //QuestionLogic(_playerAnswer);
     }
 
+    /*
     private void QuestionLogic(TMP_InputField _answer)
     {
         string answerString = _answer.text.ToLower();
@@ -47,6 +82,8 @@ public class PuzzleLogic : MonoBehaviour
             incorrectAnswer?.Invoke();
         }
     }
+    */
+
 
     private void OpenBox()
     {
@@ -75,4 +112,14 @@ public class PuzzleLogic : MonoBehaviour
         }
     }
 
+    private void CorrectAnswer()
+    {
+        correctAnswer?.Invoke();
+        Instantiate(key, transform.position + Vector3.forward / 2, Quaternion.identity);
+    }
+
+    private void IncorrectAnswer()
+    {
+        incorrectAnswer?.Invoke();
+    }
 }
