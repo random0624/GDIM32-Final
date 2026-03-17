@@ -81,6 +81,7 @@ public class Lion : MonoBehaviour
             CheckStuck();
         }
        
+        
 
         //debugging
 
@@ -201,8 +202,8 @@ public class Lion : MonoBehaviour
 
     private void CheckDistance()
     {
-        
 
+        /*
         if (Vector3.Distance(transform.position, _playerTransform.position) <= _triggerDistance)
         {
             _playerInRange = true;
@@ -232,11 +233,65 @@ public class Lion : MonoBehaviour
                 ChangeState(LionState._wandering);
             }
            //maybe try moving the entering wandering state somewhere else
+
         }
+        */
+        
+
+        if (_playerTransform == null)
+        {
+            return;
+        }
+
+        float distanceToPlayer = Vector3.Distance(transform.position, _playerTransform.position);
+        _playerInRange = distanceToPlayer <= _triggerDistance;
+
+        bool canSeePlayer = CanSeePlayer();
+        bool playerIsHidden = GameController.Instance.Player.IsHidden;
+
+        if (_playerInRange && canSeePlayer && !playerIsHidden)
+        {
+            if (!_triggered)
+            {
+                _triggered = true;
+                _lionTriggered?.Invoke();
+            }
+
+            if (_state != LionState._pursuing&&!_canSeeMeat)
+            {
+               // _canSeeMeat = false;
+                ChangeState(LionState._pursuing);
+            }
+
+            return;
+        }
+
+        if (!_playerInRange || !canSeePlayer || playerIsHidden)
+        {
+            _triggered = false;
+
+            if (_state == LionState._pursuing && !_canSeeMeat)
+            {
+                ChangeState(LionState._wandering);
+                return;
+            }
+
+            CheckNewDestinationNeeded();
+
+            if (_lionNeedsNewDestination && _state != LionState._wandering)
+            {
+                ChangeState(LionState._wandering);
+            }
+        }
+        Debug.Log("Distance: " + distanceToPlayer + " | InRange: " + _playerInRange + " | CanSeePlayer: " + canSeePlayer + " | State: " + _state + " | CanSeeMeat: " + _canSeeMeat);
+        
+     
     }
 
     private bool CanSeePlayer()
+
     {
+        /*
         if(_playerTransform == null || _eyepoint == null)
         {
             return false;
@@ -268,7 +323,82 @@ public class Lion : MonoBehaviour
         }
 
         //first line im deleting if ts doesnt work
-        return Physics.Raycast(_eyepoint.position, toPlayer.normalized, distance, _playerMask);
+        return Physics.Raycast(_eyepoint.position, toPlayer.normalized, distance, _playerMask);*/
+
+        /*
+        if (_playerTransform == null || _eyepoint == null)
+        {
+            return false;
+        }
+
+        if (GameController.Instance.Player.IsHidden)
+        {
+            return false;
+        }
+
+        Vector3 toPlayer = _playerTransform.position - _eyepoint.position;
+        float distance = toPlayer.magnitude;
+
+        if (distance > _viewDistance)
+        {
+            return false;
+        }
+
+        float angle = Vector3.Angle(_eyepoint.forward, toPlayer);
+
+        if (angle > _viewAngle * 0.5f)
+        {
+            return false;
+        }
+
+        if (Physics.Raycast(_eyepoint.position, toPlayer.normalized, distance, _obstacleMask))
+        {
+            return false;
+        }
+
+        return true;
+        */
+        if (_playerTransform == null || _eyepoint == null)
+        {
+            return false;
+        }
+
+        if (GameController.Instance.Player.IsHidden)
+        {
+            return false;
+        }
+
+        Vector3 toPlayer = _playerTransform.position - _eyepoint.position;
+        float distance = toPlayer.magnitude;
+
+        if (distance > _viewDistance)
+        {
+            return false;
+        }
+
+        float angle = Vector3.Angle(_eyepoint.forward, toPlayer);
+        if (angle > _viewAngle * 0.5f)
+        {
+            return false;
+        }
+
+        RaycastHit hit;
+        if (Physics.Raycast(_eyepoint.position, toPlayer.normalized, out hit, distance))
+        {
+            Debug.Log("Ray hit: " + hit.collider.name);
+
+            if (hit.collider.transform == _playerTransform || hit.collider.transform.IsChildOf(_playerTransform))
+            {
+                return true;
+            }
+
+            if (((1 << hit.collider.gameObject.layer) & _obstacleMask) != 0)
+            {
+                return false;
+            }
+        }
+
+        return false;
     }
 
     private void CheckNewDestinationNeeded()
@@ -361,21 +491,7 @@ public class Lion : MonoBehaviour
     }
     */
 
-    private void CheckMeatDistance()
-    {
-        float distance = Vector3.Distance(transform.position, _meatLocation);
-
-        if (distance <= _triggerDistance)
-        {
-            Debug.Log("can see meat");
-            _canSeeMeat = true;
-            ChangeState(LionState._pursuing);
-            Debug.Log("eating");
-            ChangeState(LionState._idle);
-        }
-      
-    }
-
+ 
 
     private void ReactToMeatThrow()
     {
@@ -383,7 +499,7 @@ public class Lion : MonoBehaviour
         _canSeeMeat = true;
         ChangeState(LionState._pursuing);
         Debug.Log(_meatLocation);
-        CheckMeatDistance();
+     
     }
 
 //When player is hidden in a bush, lion stops pursuing and wanders
@@ -400,12 +516,14 @@ public class Lion : MonoBehaviour
     private void OnPlayerWrongKey()
     {
         _lionTarget= _playerTransform.position;
+        _canSeeMeat= false;
         ChangeState(LionState._pursuing);
     }
 
     private void OnPlayerWrongAnswer()
     {
         _lionTarget = _playerTransform.position;
+        _canSeeMeat= false;
         ChangeState(LionState._pursuing);
     }
     private void OnEnable()
