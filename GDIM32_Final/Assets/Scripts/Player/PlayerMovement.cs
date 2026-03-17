@@ -52,6 +52,28 @@ public class PlayerMovement : MonoBehaviour
 
     public delegate void PigeonCallRequested();
     public event PigeonCallRequested OnPigeonCallRequested;
+
+
+// Hide In Bush Event Init
+    public bool IsHidden { get; private set; }
+    public delegate void PlayerHiddenChanged();
+    public event PlayerHiddenChanged OnPlayerHidden;
+    public event PlayerHiddenChanged OnPlayerRevealed;
+
+    public void SetHidden(bool hidden)
+    {
+        if (hidden && !IsHidden)
+        {
+            IsHidden = true;
+            OnPlayerHidden?.Invoke();
+        }
+        else if (!hidden && IsHidden)
+        {
+            IsHidden = false;
+            OnPlayerRevealed?.Invoke();
+        }
+    }
+
     private void Awake()
     {
          

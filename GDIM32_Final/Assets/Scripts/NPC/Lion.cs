@@ -194,7 +194,7 @@ public class Lion : MonoBehaviour
 
         }
 
-        if (_playerInRange && !_triggered &&CanSeePlayer())
+        if (_playerInRange && !_triggered && CanSeePlayer() && !GameController.Instance.Player.IsHidden) //IsHidden check if the player is hidden in a bush
         {
             _triggered = true;
             _lionTriggered?.Invoke();
@@ -221,6 +221,10 @@ public class Lion : MonoBehaviour
         {
             return false;
         }
+
+//Added logic to check if the player is hidden in a bush
+        if (GameController.Instance.Player.IsHidden)
+            return false;
 
         Vector3 toPlayer = _playerTransform.position- _eyepoint.position;
 
@@ -293,16 +297,27 @@ public class Lion : MonoBehaviour
         CheckMeatDistance();
     }
 
+//When player is hidden in a bush, lion stops pursuing and wanders
+    private void OnPlayerHidden()
+    {
+        if (_state == LionState._pursuing)
+            ChangeState(LionState._wandering);
+    }
+
+//State is NOT changed when player is revealed
+    private void OnPlayerRevealed() { }
+
     private void OnEnable()
     {
         GameController.Instance.Player.OnMeatThrownEvent += ReactToMeatThrow;
-        
-
+        GameController.Instance.Player.OnPlayerHidden += OnPlayerHidden;
+        GameController.Instance.Player.OnPlayerRevealed += OnPlayerRevealed;
     }
 
     private void OnDisable()
     {
         GameController.Instance.Player.OnMeatThrownEvent -= ReactToMeatThrow;
-
+        GameController.Instance.Player.OnPlayerHidden -= OnPlayerHidden;
+        GameController.Instance.Player.OnPlayerRevealed -= OnPlayerRevealed;
     }
 }
