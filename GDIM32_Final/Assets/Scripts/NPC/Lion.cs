@@ -263,6 +263,27 @@ public class Lion : MonoBehaviour
 
     }
 
+    private void CheckStuck()
+    {
+        Vector3 startPosition = transform.position;
+
+        float stuckTimer = 0;
+
+        stuckTimer += Time.deltaTime;
+
+        if( stuckTimer >= 2.0f)
+        {
+            Vector3 newPosition= transform.position;
+
+            if(Vector3.Distance(startPosition, newPosition) <= 2)
+            {
+                // _lionNeedsNewDestination = true;
+                ChangeState(LionState._wandering);
+            }
+        }
+    }
+
+
     /*
     private void ReactToMeatThrow()
     {
@@ -312,6 +333,7 @@ public class Lion : MonoBehaviour
         GameController.Instance.Player.OnMeatThrownEvent += ReactToMeatThrow;
         GameController.Instance.Player.OnPlayerHidden += OnPlayerHidden;
         GameController.Instance.Player.OnPlayerRevealed += OnPlayerRevealed;
+        
     }
 
     private void OnDisable()
