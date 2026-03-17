@@ -2544,6 +2544,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7885b69f1caa8ad4db77aecccb9e28cb, type: 2}
   - {fileID: 11400000, guid: 83bc0981f50d86047863391b525c3da8, type: 2}
   - {fileID: 11400000, guid: 1e728e015b01ee84e9f01bbb4c788324, type: 2}
+  keyLocation: {x: 0, y: 0, z: 0}
   finalKey: {fileID: 9070329235674524392, guid: fc4c2c6ae23d43f4dbbbe8a938c6badb, type: 3}
 --- !u!65 &517985977
 BoxCollider:
@@ -3178,6 +3179,7 @@ MonoBehaviour:
   keySprite: {fileID: 21300000, guid: 3b270a7035afa41a186f82dd18659344, type: 3}
   meatSprite: {fileID: 21300000, guid: 3817739b11eb441bf8f631139bd0e3b7, type: 3}
   pickUpItem_gameObject: {fileID: 1985082563}
+  interactText: {fileID: 0}
 --- !u!114 &581312073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4234,10 +4236,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _questionText: {fileID: 1716199979}
+  _option1Text: {fileID: 0}
+  _option2Text: {fileID: 0}
+  _thingText: {fileID: 0}
   key: {fileID: 9129136310747271437, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
+  option1:
+  - Blue
+  - Bee Movie
+  option2:
+  - Urple
+  - Avatar
   question:
-  - What color is the sky
-  - What was the kamen rider show in 2001?
+  - What color is the sky?
+  - What was the higher grossing movie?
+  nextLocation: []
   dialougeBox: {fileID: 1613166217}
   correctIndex: 0100000002000000
 --- !u!65 &757146293
@@ -5024,6 +5036,7 @@ MonoBehaviour:
   canOpen: 0
   playerInvetory: {fileID: 581312072}
   doorText: {fileID: 173202699}
+  nextLocation: []
 --- !u!4 &835429007
 Transform:
   m_ObjectHideFlags: 0

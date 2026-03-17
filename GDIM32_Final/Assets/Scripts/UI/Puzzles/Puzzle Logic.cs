@@ -15,9 +15,16 @@ public class PuzzleLogic : MonoBehaviour
     // [SerializeField] private Button but2;
 
     [SerializeField] private TMP_Text _questionText;
+    [SerializeField] private TMP_Text _option1Text;
+    [SerializeField] private TMP_Text _option2Text;
+    [SerializeField] private TMP_Text _thingText;
+
     [SerializeField] private GameObject key;
-    // [SerializeField] private string answer;
+    [SerializeField] private string[] option1;
+    [SerializeField] private string[] option2;
     [SerializeField] private string[] question;
+
+    [SerializeField] private Vector3[] nextLocation;
 
     [SerializeField] private GameObject dialougeBox;
 
@@ -37,12 +44,14 @@ public class PuzzleLogic : MonoBehaviour
     void Start()
     {
         GameController.Instance.Player.puzzleClickedOn += OpenBox;
+        this.transform.position = nextLocation[currentQuestion];
     }
 
     // Update is called once per frame
     void Update()
     {
         checkBox();
+        _thingText.text = "Question #" + (currentQuestion + 1).ToString();
 
         if (puzzleIndex < 2)
         {
@@ -105,6 +114,8 @@ public class PuzzleLogic : MonoBehaviour
         {
             isOpeoned = true;
             _questionText.text = question[currentQuestion];
+            _option1Text.text = option1[currentQuestion] + "(1)";
+            _option2Text.text = option2[currentQuestion] + "(2)";
 
         }
 
@@ -130,10 +141,9 @@ public class PuzzleLogic : MonoBehaviour
     {
         correctAnswer?.Invoke();
         Instantiate(key, transform.position + Vector3.back + Vector3.down, Quaternion.identity);
-        this.transform.position += Vector3.left;
-       
-            puzzleIndex++;
-            currentQuestion++;
+        puzzleIndex++;
+        currentQuestion++;
+        this.transform.position = nextLocation[currentQuestion];
     }
 
     private void IncorrectAnswer()

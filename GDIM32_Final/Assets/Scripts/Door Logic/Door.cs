@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Door : MonoBehaviour
@@ -9,6 +10,8 @@ public class Door : MonoBehaviour
 
     [SerializeField] private Inventory playerInvetory;
     [SerializeField] private TMP_Text doorText;
+
+    [SerializeField] private Vector3[] nextLocation;
 
     public delegate void ListenToEvent();
     public event ListenToEvent wrongKey;
@@ -26,6 +29,7 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       transform.position = nextLocation[doorsOponed];
        CheckIndex();
        CheckIfOpen(this);
     }
@@ -56,13 +60,8 @@ public class Door : MonoBehaviour
     {
         if (canOpen == true)
         {
-                doorText.gameObject.SetActive(true);
-
-                StartCoroutine(waitSeconds());
-
-                doorText.gameObject.SetActive(false);
+                DoorTextShowup(); 
                 canOpen = false;
-                store.gameObject.transform.position = this.transform.position + Vector3.forward / 2;
                 doorsOponed++;
         }
     }
@@ -76,8 +75,21 @@ public class Door : MonoBehaviour
         if(doorsOponed >= 2)
         {
             finalDoor?.Invoke();
+            
+        }
+        if(doorsOponed >= 3)
+        {
             this.gameObject.SetActive(false);
         }
+    }
+
+    private void DoorTextShowup()
+    {
+        doorText.gameObject.SetActive(true);
+
+        StartCoroutine(waitSeconds());
+
+        doorText.gameObject.SetActive(false);
     }
 
 }

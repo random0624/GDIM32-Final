@@ -1,9 +1,10 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using JetBrains.Annotations;
 
 public class Inventory : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] Sprite keySprite;
     [SerializeField] Sprite meatSprite;
     [SerializeField] GameObject pickUpItem_gameObject;
+    [SerializeField] GameObject interactText;
 
     private Dictionary<itemType, Sprite> _itemSpriteByType;
     private Dictionary<itemType, GameObject> itemSetActive = new Dictionary<itemType, GameObject>(){};
