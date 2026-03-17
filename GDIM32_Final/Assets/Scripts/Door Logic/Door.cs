@@ -13,8 +13,9 @@ public class Door : MonoBehaviour
     public delegate void ListenToEvent();
     public event ListenToEvent wrongKey;
     public event ListenToEvent correctKey;
+    public event ListenToEvent finalDoor;
 
-    private int doorsOponed;
+    private int doorsOponed = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +26,7 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckIfOpen(this);
-       // Debug.Log(canOpen);
+       CheckIfOpen(this);
     }
     
     
@@ -43,7 +43,7 @@ public class Door : MonoBehaviour
 
         } else if (index == 0)
         {
-            Debug.Log("You dont have an item");
+            wrongKey?.Invoke();
         }
         else
         {
@@ -55,22 +55,29 @@ public class Door : MonoBehaviour
     {
         if (canOpen == true)
         {
-            if (doorsOponed >= 3)
+            if (doorsOponed >= 2)
             {
-                store.gameObject.SetActive(false);
+                finalDoor?.Invoke();
+                Debug.Log("done");
+                this.gameObject.SetActive(false);
             }
             else
             {
+                doorText.gameObject.SetActive(true);
+                StartCoroutine(waitSeconds(3));
                 canOpen = false;
                 store.gameObject.transform.position = this.transform.position + Vector3.forward / 2;
                 doorsOponed++;
             }
-            doorText.gameObject.SetActive(true);
         }
         else
         {
             doorText.gameObject.SetActive(false);
         }
     }
-    
+    IEnumerator waitSeconds(int seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+    }
+
 }

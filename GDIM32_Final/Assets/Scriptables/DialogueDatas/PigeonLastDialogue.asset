@@ -10,11 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc92defed5ab1e8458067212df6f9f65, type: 3}
-  m_Name: PigeonSecondInteraction
+  m_Name: PigeonLastDialogue
   m_EditorClassIdentifier: 
   lines:
-  - Wow you did it!
-  - Your almost done
-  - Solve the next puzzle and you'll get access to the final door
-  - The next hint is related to kamen rider
-  - Make sure to come back to me once you complete the puzzle for the final key
+  - Wow you actually did it!
+  - Here's the final key
+  - Get out of here!

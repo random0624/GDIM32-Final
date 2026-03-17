@@ -2998,7 +2998,8 @@ MonoBehaviour:
   _npcLines:
   - {fileID: 11400000, guid: 7885b69f1caa8ad4db77aecccb9e28cb, type: 2}
   - {fileID: 11400000, guid: 83bc0981f50d86047863391b525c3da8, type: 2}
-  finalKey: {fileID: 0}
+  - {fileID: 11400000, guid: 1e728e015b01ee84e9f01bbb4c788324, type: 2}
+  finalKey: {fileID: 9070329235674524392, guid: fc4c2c6ae23d43f4dbbbe8a938c6badb, type: 3}
 --- !u!65 &517985977
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5057,14 +5058,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b434f1eb718294aa88348e8e8d3ad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  but1: {fileID: 0}
-  but2: {fileID: 0}
   _questionText: {fileID: 1716199979}
-  key: {fileID: 2108164431}
-  answer: Kendrick
-  question: Who won the battle
+  key: {fileID: 9129136310747271437, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
+  question:
+  - What was the kamen rider show in 2001?
+  - What was idk
   dialougeBox: {fileID: 1613166217}
-  correctIndex: 0
+  correctIndex: 0100000002000000
 --- !u!65 &757146293
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5981,7 +5981,7 @@ GameObject:
   - component: {fileID: 835429006}
   - component: {fileID: 835429005}
   m_Layer: 0
-  m_Name: Door
+  m_Name: 'Door '
   m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14196,11 +14196,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
---- !u!1 &2108164431 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9129136310747271437, guid: 2aa43e72b8e1c37428bba4bd14e7d8b7, type: 3}
-  m_PrefabInstance: {fileID: 5593416730212817354}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2115286442
 PrefabInstance:
   m_ObjectHideFlags: 0

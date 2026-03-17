@@ -29,6 +29,7 @@ public class Pigeon : MonoBehaviour
     {
         GameController.Instance.Player.birdClickedOn += OpenBox;
         GameController.Instance.CurrentDoor.correctKey += UpdateNodeLine;
+        GameController.Instance.CurrentDoor.finalDoor += spawnFinalKey;
      }
 
     // Update is called once per frame

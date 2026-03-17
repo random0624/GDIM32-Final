@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using TMPro;
+using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,13 +11,13 @@ using UnityEngine.UI;
 public class PuzzleLogic : MonoBehaviour
 {
     //[SerializeField] private TMP_InputField _playerAnswer;
-    [SerializeField] private Button but1;
-    [SerializeField] private Button but2;
+    // [SerializeField] private Button but1;
+    // [SerializeField] private Button but2;
 
     [SerializeField] private TMP_Text _questionText;
     [SerializeField] private GameObject key;
-    [SerializeField] private string answer;
-    [SerializeField] private string question;
+    // [SerializeField] private string answer;
+    [SerializeField] private string[] question;
 
     [SerializeField] private GameObject dialougeBox;
 
@@ -23,9 +25,13 @@ public class PuzzleLogic : MonoBehaviour
     public event GameListen correctAnswer;
     public event GameListen incorrectAnswer;
 
-    [SerializeField] private int correctIndex;
+    [SerializeField] private int[] correctIndex;
+
+    private int currentQuestion;
 
     private bool isOpeoned;
+
+    private int puzzleIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -37,32 +43,40 @@ public class PuzzleLogic : MonoBehaviour
     void Update()
     {
         checkBox();
-        
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+
+        if (puzzleIndex < 2)
         {
-            if(correctIndex == 1)
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                CorrectAnswer();
-                closeBox();
+                if (puzzleIndex < 2)
+                    if (correctIndex[currentQuestion] == 1)
+                    {
+                        CorrectAnswer();
+                        closeBox();
+                    }
+                    else
+                    {
+                        IncorrectAnswer();
+                        closeBox();
+                    }
             }
-            else
+            if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                IncorrectAnswer();
-                closeBox();
+                if (correctIndex[currentQuestion] == 1)
+                {
+                    IncorrectAnswer();
+                    closeBox();
+                }
+                else
+                {
+                    CorrectAnswer();
+                    closeBox();
+                }
             }
         }
-        if(Input.GetKeyDown(KeyCode.Alpha2))
+        else
         {
-            if (correctIndex == 1)
-            {
-                IncorrectAnswer();
-                closeBox();
-            }
-            else
-            {
-                CorrectAnswer();
-                closeBox();
-            }
+            this.gameObject.SetActive(false);
         }
         //QuestionLogic(_playerAnswer);
     }
@@ -90,7 +104,7 @@ public class PuzzleLogic : MonoBehaviour
         if (!isOpeoned)
         {
             isOpeoned = true;
-            _questionText.text = question;
+            _questionText.text = question[currentQuestion];
 
         }
 
@@ -102,20 +116,24 @@ public class PuzzleLogic : MonoBehaviour
 
     private void checkBox()
     {
-        if (isOpeoned)
-        {
-            dialougeBox.SetActive(true);
-        }
-        if (!isOpeoned)
-        {
-            dialougeBox.SetActive(false);
-        }
+            if (isOpeoned)
+            {
+                dialougeBox.SetActive(true);
+            }
+            if (!isOpeoned)
+            {
+                dialougeBox.SetActive(false);
+            }
     }
 
     private void CorrectAnswer()
     {
         correctAnswer?.Invoke();
-        Instantiate(key, transform.position + Vector3.forward / 2, Quaternion.identity);
+        Instantiate(key, transform.position + Vector3.back + Vector3.down, Quaternion.identity);
+        this.transform.position += Vector3.left;
+       
+            puzzleIndex++;
+            currentQuestion++;
     }
 
     private void IncorrectAnswer()
