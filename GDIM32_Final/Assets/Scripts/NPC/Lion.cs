@@ -37,7 +37,10 @@ public class Lion : MonoBehaviour
     
     private Vector3 _meatLocation;
     private bool _canSeeMeat;
-
+    
+    [SerializeField] private float _meatReachDistance = 1.0f;
+    [SerializeField] private float _meatNoticeDistance = 10f;
+   
 
     private Vector3 _stuckStartPosition;
     private float _stuckTimer;
@@ -175,6 +178,7 @@ public class Lion : MonoBehaviour
 
     public void Pursuing()
     {
+        /*
         _animator.Play("run");
 
 
@@ -192,12 +196,43 @@ public class Lion : MonoBehaviour
         _agent.SetDestination(_lionTarget);
 
       //  _canSeeMeat = false;
-        if (_canSeeMeat && !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
+        if (_canSeeMeat &&Vector3.Distance(transform.position, _meatLocation) <= _meatReachDistance)
         {
+            Debug.Log("meat reached");
             _canSeeMeat = false;
             ChangeState(LionState._idle);
         }
+        */
 
+        //redo
+        _animator.Play("run");
+
+        if (_canSeeMeat)
+        {
+            _lionTarget = _meatLocation;
+            _agent.isStopped = false;
+            _agent.SetDestination(_lionTarget);
+
+            float meatDistance = Vector3.Distance(transform.position, _meatLocation);
+
+            Debug.Log("Going to meat: " + _meatLocation +
+                      " | CurrentPos: " + transform.position +
+                      " | MeatDist: " + meatDistance);
+
+            if (!_agent.pathPending && meatDistance <= _meatReachDistance)
+            {
+                Debug.Log("Reached meat");
+                _canSeeMeat = false;
+                _agent.ResetPath();
+                ChangeState(LionState._idle);
+            }
+
+            return;
+        }
+
+        _lionTarget = _playerTransform.position;
+        _agent.isStopped = false;
+        _agent.SetDestination(_lionTarget);
     }
 
     private void CheckDistance()
@@ -236,7 +271,13 @@ public class Lion : MonoBehaviour
 
         }
         */
-        
+
+        //had to redo
+
+        if (_canSeeMeat)
+        {
+            return;
+        }
 
         if (_playerTransform == null)
         {
@@ -257,35 +298,31 @@ public class Lion : MonoBehaviour
                 _lionTriggered?.Invoke();
             }
 
-            if (_state != LionState._pursuing&&!_canSeeMeat)
+            if (_state != LionState._pursuing)
             {
-               // _canSeeMeat = false;
                 ChangeState(LionState._pursuing);
             }
 
             return;
         }
 
-        if (!_playerInRange || !canSeePlayer || playerIsHidden)
+        _triggered = false;
+
+        if (_state == LionState._pursuing)
         {
-            _triggered = false;
-
-            if (_state == LionState._pursuing && !_canSeeMeat)
-            {
-                ChangeState(LionState._wandering);
-                return;
-            }
-
-            CheckNewDestinationNeeded();
-
-            if (_lionNeedsNewDestination && _state != LionState._wandering)
-            {
-                ChangeState(LionState._wandering);
-            }
+            ChangeState(LionState._wandering);
+            return;
         }
-        Debug.Log("Distance: " + distanceToPlayer + " | InRange: " + _playerInRange + " | CanSeePlayer: " + canSeePlayer + " | State: " + _state + " | CanSeeMeat: " + _canSeeMeat);
-        
-     
+
+        CheckNewDestinationNeeded();
+
+        if (_lionNeedsNewDestination && _state != LionState._wandering)
+        {
+            ChangeState(LionState._wandering);
+        }
+        //   Debug.Log("Distance: " + distanceToPlayer + " | InRange: " + _playerInRange + " | CanSeePlayer: " + canSeePlayer + " | State: " + _state + " | CanSeeMeat: " + _canSeeMeat);
+
+
     }
 
     private bool CanSeePlayer()
@@ -358,6 +395,8 @@ public class Lion : MonoBehaviour
 
         return true;
         */
+
+        //had to redo
         if (_playerTransform == null || _eyepoint == null)
         {
             return false;
@@ -421,7 +460,7 @@ public class Lion : MonoBehaviour
 
         _stuckTimer += Time.deltaTime;
 
-        if (_stuckTimer >= 1f)
+        if (_stuckTimer >= 0.5f)
         {
             float movedDistance = Vector3.Distance(_stuckStartPosition, transform.position);
 
@@ -481,32 +520,46 @@ public class Lion : MonoBehaviour
         }
     }
 
-    /*
-    private void ReactToMeatThrow()
-    {
-        //if close enough
-        //change navmesh dest to meat
-        //change state to pursuing
-        //might have to change the state machine a little so it can be set to any objects destination 
-    }
-    */
-
+  
  
 
     private void ReactToMeatThrow()
     {
-        _meatLocation = GameController.Instance.Player.GetMeatLocation();
-        _canSeeMeat = true;
-        ChangeState(LionState._pursuing);
-        Debug.Log(_meatLocation);
-     
+
+        Vector3 thrownMeatLocation = GameController.Instance.Player.GetMeatLocation();
+
+        float distanceToMeat = Vector3.Distance(transform.position, thrownMeatLocation);
+        Debug.Log("Distance to thrown meat: " + distanceToMeat);
+
+        if (distanceToMeat <= _meatNoticeDistance)
+        {
+            if (NavMesh.SamplePosition(thrownMeatLocation, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+            {
+                _meatLocation = hit.position;
+                _canSeeMeat = true;
+
+                Debug.Log("Lion noticed meat at: " + _meatLocation);
+
+                ChangeState(LionState._pursuing);
+            }
+            else
+            {
+                Debug.Log("No valid navmesh point near meat");
+            }
+        }
+        else
+        {
+            Debug.Log("Meat outside notice distance");
+        }
     }
 
 //When player is hidden in a bush, lion stops pursuing and wanders
     private void OnPlayerHidden()
     {
+        if (_canSeeMeat) return;
         if (_state == LionState._pursuing)
             ChangeState(LionState._wandering);
+        
     }
 
 //State is NOT changed when player is revealed
@@ -515,15 +568,17 @@ public class Lion : MonoBehaviour
 
     private void OnPlayerWrongKey()
     {
-        _lionTarget= _playerTransform.position;
-        _canSeeMeat= false;
+        if (_canSeeMeat) return;
+        
+        
         ChangeState(LionState._pursuing);
     }
 
     private void OnPlayerWrongAnswer()
     {
-        _lionTarget = _playerTransform.position;
-        _canSeeMeat= false;
+        if (_canSeeMeat) return;
+        
+        
         ChangeState(LionState._pursuing);
     }
     private void OnEnable()
