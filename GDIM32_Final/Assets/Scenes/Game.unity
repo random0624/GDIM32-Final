@@ -8041,6 +8041,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1935963121833918864, guid: f0942079fcab217478df8d99cba04474, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -134
+      objectReference: {fileID: 0}
     - target: {fileID: 3278895548639873925, guid: f0942079fcab217478df8d99cba04474, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -8123,7 +8127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4437478498462176553, guid: f0942079fcab217478df8d99cba04474, type: 3}
       propertyPath: m_text
-      value: V
+      value: Countinue (v)
       objectReference: {fileID: 0}
     - target: {fileID: 4694911133510491693, guid: f0942079fcab217478df8d99cba04474, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -8136,6 +8140,10 @@ PrefabInstance:
     - target: {fileID: 4694911133510491693, guid: f0942079fcab217478df8d99cba04474, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Pigeon, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435712117931225262, guid: f0942079fcab217478df8d99cba04474, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 28.091736
       objectReference: {fileID: 0}
     - target: {fileID: 7189547592355294382, guid: f0942079fcab217478df8d99cba04474, type: 3}
       propertyPath: m_fontSize
@@ -8157,6 +8165,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 36
       objectReference: {fileID: 0}
+    - target: {fileID: 7542066925447607055, guid: f0942079fcab217478df8d99cba04474, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -284
+      objectReference: {fileID: 0}
     - target: {fileID: 8676369697866271042, guid: f0942079fcab217478df8d99cba04474, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -8171,7 +8183,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8900834634564158153, guid: f0942079fcab217478df8d99cba04474, type: 3}
       propertyPath: m_text
-      value: Tab
+      value: Exit (tab)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9200166865923441229, guid: f0942079fcab217478df8d99cba04474, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
