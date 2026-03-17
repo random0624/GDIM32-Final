@@ -44,8 +44,10 @@ I also coded the lions reaction to the meat throw, and player errors, such as wh
 
 
 
-### Team Member Name 2
-Put your individual final Devlog here.
+### Romarick Anderson 
+Individual devlog
+
+
 ### Team Member Name 3
 Ransom Liu
 

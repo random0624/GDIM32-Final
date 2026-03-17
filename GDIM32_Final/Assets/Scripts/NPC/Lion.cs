@@ -19,6 +19,7 @@ public class Lion : MonoBehaviour
     [SerializeField] private float _viewAngle;
     [SerializeField] private LayerMask _obstacleMask;
     [SerializeField] private LayerMask _playerMask;
+    [SerializeField] private GameObject amenBreak;
 
     
     private float _stateTimer;
@@ -152,6 +153,7 @@ public class Lion : MonoBehaviour
                 _animator.SetBool("Moving", true);
                 _animator.SetTrigger("Triggered");
                 _animator.Play("roar");
+                Instantiate(amenBreak);
                 break;
         }
     }

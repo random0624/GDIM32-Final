@@ -10475,6 +10475,7 @@ MonoBehaviour:
   _playerMask:
     serializedVersion: 2
     m_Bits: 256
+  amenBreak: {fileID: 5064591352290149335, guid: 0d2ce8fe62f943d48a0a3c2a32d5039d, type: 3}
   _meatReachDistance: 4
   _meatNoticeDistance: 15
   _meatPauseDuration: 4
