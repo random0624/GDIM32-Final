@@ -8,6 +8,8 @@ public class GameController : MonoBehaviour
     public Door CurrentDoor {get; private set;}
     public Pigeon CurrentPigeon { get; private set; }
 
+    public PuzzleLogic CurrentPuzzle { get; private set;}
+
     [SerializeField] GameObject _gameOverUI;
  
     private void Awake()
@@ -34,6 +36,14 @@ public class GameController : MonoBehaviour
             return;
         }
         CurrentDoor = doorObj.GetComponent<Door>();
+
+        GameObject puzObj = GameObject.FindGameObjectWithTag("Puzzle");
+        if (doorObj == null)
+        {
+            Debug.LogError("GameController: No GameObject with tag 'Door' found in the scene.");
+            return;
+        }
+        CurrentPuzzle = puzObj.GetComponent<PuzzleLogic>();
 
         Pigeon pigeon = FindObjectOfType<Pigeon>(true);
         if (pigeon != null)

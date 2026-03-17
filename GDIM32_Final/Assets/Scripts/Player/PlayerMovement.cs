@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     public delegate void GameListen();
     public event GameListen doorClickedOn;
     public event GameListen birdClickedOn;
+    public event GameListen puzzleClickedOn;
 
     public delegate void PigeonCallRequested();
     public event PigeonCallRequested OnPigeonCallRequested;
@@ -206,6 +207,10 @@ void Start()
                 if (hit.transform.gameObject.name == "Pigeon")
                 {
                     birdClickedOn?.Invoke();
+                }
+                if (hit.transform.gameObject.GetComponent<PuzzleLogic>() != null)
+                {
+                    puzzleClickedOn?.Invoke();
                 }
             }
         }

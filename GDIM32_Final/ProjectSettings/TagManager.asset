@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Lion
   - Door
+  - Puzzle
   layers:
   - Default
   - TransparentFX
