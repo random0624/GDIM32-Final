@@ -33,7 +33,11 @@ Put your individual check-in Devlog here.
 ## Final Submission
 ### Group Devlog
 
+One design pattern we used was the state machine. This is very prominent in the code for the lion npc as the entire game is quite dependent on its movement. There were many instances where the lion had to switch between states, some examples including starting idle, then going to wandering, going from wandering to pursuing once the player was in sight, reverting back to wandering when the player got away or hid in a bush, and going into pursuing mode with the meat piece as the target when a piece is thrown. If we didn't use a state machine, all of the requirements for starting each state, such as setting a navmesh destination, playing animations, setting boolean variables back to their original states etc, would have to be typed for every single instance there was a state switch, and with how many we have it would be very redundant. Although the lion was mostly handled by one person, because we used a state machine, on the rare occasion another member had to use the lion code, they could switch between states without having to learn all of the logic every time they needed to. 
+
 ### Team Member Name 1
+Evrin Lee
+
 
 ### Team Member Name 2
 Put your individual final Devlog here.
