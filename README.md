@@ -44,6 +44,14 @@ Put your individual final Devlog here.
 ### Team Member Name 3
 Ransom Liu
 
+Group Devlog: 
+Model - The PlayerMovement class is responsible for storing the "state" related to players, including input, and exposing only changes to the state through events. PlayerMovement has no references to Pigeon, Lion, Door, or Bush. As for input, this is managed in Update() and ClickedSystem(): Key Presses (for example, C for pigeon call) and Ray Cast Clicks cause events to be raised such as OnPigeonCallRequested?.Invoke(), doorClickedOn?.Invoke(), and birdClickedOn?.Invoke(). When a collision occurs with the lion, OnLoseLife?.Invoke() is invoked (line 211). Therefore, the model owns the state and "something happened" signals; however, the model itself has no knowledge of how the UI or NPCs will respond to these signals.
+
+View - Views are the components used to display or hide information in response to those signals. Pigeon is a View: In Start() (line 39), it subscribes to birdClickedOn and determines if the dialogue box should be active (dialougeBox.SetActive) and what the hintText should be. The game-over UI in the GameController (i.e. _gameOverUI.SetActive(true) in CheckGameOver()) is another View. Door modifies its own transform and text; BushHidingZone is the "view" of the bush as both an interactive zone (trigger volume) and as providing feedback to the model about the input it received from the zone (by calling SetHidden).
+
+Controller - Controllers listen to the model's signals (events) and determine how they want to react to them and therefore drive Views or other behavior. PigeonCallController listens for Player.OnPigeonCallRequested (line 8) and in the event handler (lines 17-29), it simply determines whether to call either CurrentPigeon.Enable() or Disable() — it doesn't receive any raw input or have knowledge of any pigeon state. GameController listens for Player.OnLoseLife and causes the game-over UI and time scale to be enabled. Door listens for Player.doorClickedOn (line 26) and runs doorLogic(); it then raises correctKey, which is used by Pigeon to move to the next line of dialogue. Lion listens for Player.OnPlayerHidden and, when the player is hidden, it will switch to walking rather than chasing. Therefore, each Controller responds to one or more model signals (events) and alters either a View or the state of a NPC; the model remains completely unaware of the Controllers.
+
+
 ## Open-Source Assets
 Cite any open-source assets here. Put them in a LIST, and use correctly formatted LINKS.
 
