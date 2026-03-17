@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8228440031246197733}
   - component: {fileID: 4813922211006306649}
   - component: {fileID: 1979624520827634946}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stump_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 6479606651210384647}
   - component: {fileID: 5738358572514241374}
   - component: {fileID: 5524950625577626301}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stump_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 5124730060526293666}
   - component: {fileID: 2574303973355235900}
   - component: {fileID: 2417767375907638927}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stump_LOD3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,9 +258,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2481384745673457707}
-  - component: {fileID: 8156590878013693598}
   - component: {fileID: 4960096696798466291}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,37 +285,6 @@ Transform:
   - {fileID: 5124730060526293666}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!205 &8156590878013693598
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7110513248368685802}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.016588628, y: 0.37388954, z: -0.03488779}
-  m_Size: 1.1522878
-  m_FadeMode: 1
-  m_AnimateCrossFading: 1
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.09890114
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 7777023126427894283}
-  - screenRelativeHeight: 0.05372258
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 5524950625577626301}
-  - screenRelativeHeight: 0.028387757
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 1979624520827634946}
-  - screenRelativeHeight: 0.01
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 2417767375907638927}
-  m_Enabled: 1
 --- !u!136 &4960096696798466291
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -332,7 +300,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -351,7 +319,7 @@ GameObject:
   - component: {fileID: 2597595484410883877}
   - component: {fileID: 2130552960667334996}
   - component: {fileID: 7777023126427894283}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stump_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
