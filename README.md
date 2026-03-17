@@ -42,7 +42,7 @@ Evrin Lee
 ### Team Member Name 2
 Put your individual final Devlog here.
 ### Team Member Name 3
-Put your individual final Devlog here.
+Ransom Liu
 
 ## Open-Source Assets
 Cite any open-source assets here. Put them in a LIST, and use correctly formatted LINKS.
